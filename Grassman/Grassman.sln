@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DHSHARP", "DHSHARP\DHSHARP.csproj", "{2EE6F624-8D51-430C-A525-1007BF043760}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grassman", "Grassman\Grassman.csproj", "{E78AE6AB-E4DF-4EF3-88AD-DE928D3FAB90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2EE6F624-8D51-430C-A525-1007BF043760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EE6F624-8D51-430C-A525-1007BF043760}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EE6F624-8D51-430C-A525-1007BF043760}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EE6F624-8D51-430C-A525-1007BF043760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E78AE6AB-E4DF-4EF3-88AD-DE928D3FAB90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E78AE6AB-E4DF-4EF3-88AD-DE928D3FAB90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E78AE6AB-E4DF-4EF3-88AD-DE928D3FAB90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E78AE6AB-E4DF-4EF3-88AD-DE928D3FAB90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
