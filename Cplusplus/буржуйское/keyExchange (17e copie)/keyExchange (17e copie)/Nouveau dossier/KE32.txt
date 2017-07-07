@@ -1,0 +1,190 @@
+comb of 2 elements out of 4
+
+01
+02
+03
+12
+13
+23
+comb of 2 elements out of 3
+###########################################################
+             ##########################
+
+   row1:
+5, 0
+1, 1
+4, 2
+
+   row2:
+-2, 0
+3, 1
+1, 2
+comb of 2 elements out of 3
+end exact concordance
+if combNumber != -1
+before sym:
+15, 01
+5, 02
+-2, 10
+1, 12
+-8, 20
+12, 21
+remplacing -2 with index 10 by adding 2 to index 01
+after sym:
+17, 01
+5, 02
+1, 12
+-8, 20
+12, 21
+end exact concordance
+if combNumber != -1
+before sym:
+17, 01
+5, 02
+1, 12
+-8, 20
+12, 21
+remplacing -8 with index 20 by adding 8 to index 02
+after sym:
+17, 01
+13, 02
+1, 12
+12, 21
+end exact concordance
+if combNumber != -1
+before sym:
+17, 01
+13, 02
+1, 12
+12, 21
+remplacing 12 with index 21 by adding -12 to index 12
+after sym:
+17, 01
+13, 02
+-11, 12
+end of loop
+17, 01
+13, 02
+-11, 12
+###########################################################
+             ##########################
+
+   row1:
+5, 0
+1, 1
+4, 2
+
+   row2:
+0, 0
+2, 1
+7, 2
+comb of 2 elements out of 3
+end exact concordance
+if combNumber != -1
+before sym:
+10, 01
+35, 02
+0, 10
+7, 12
+0, 20
+8, 21
+remplacing 0 with index 10 by adding 0 to index 01
+after sym:
+10, 01
+35, 02
+7, 12
+0, 20
+8, 21
+end exact concordance
+if combNumber != -1
+before sym:
+10, 01
+35, 02
+7, 12
+0, 20
+8, 21
+remplacing 0 with index 20 by adding 0 to index 02
+after sym:
+10, 01
+35, 02
+7, 12
+8, 21
+end exact concordance
+if combNumber != -1
+before sym:
+10, 01
+35, 02
+7, 12
+8, 21
+remplacing 8 with index 21 by adding -8 to index 12
+after sym:
+10, 01
+35, 02
+-1, 12
+end of loop
+10, 01
+35, 02
+-1, 12
+###########################################################
+             ##########################
+
+   row1:
+-2, 0
+3, 1
+1, 2
+
+   row2:
+0, 0
+2, 1
+7, 2
+comb of 2 elements out of 3
+end exact concordance
+if combNumber != -1
+before sym:
+-4, 01
+-14, 02
+0, 10
+21, 12
+0, 20
+2, 21
+remplacing 0 with index 10 by adding 0 to index 01
+after sym:
+-4, 01
+-14, 02
+21, 12
+0, 20
+2, 21
+end exact concordance
+if combNumber != -1
+before sym:
+-4, 01
+-14, 02
+21, 12
+0, 20
+2, 21
+remplacing 0 with index 20 by adding 0 to index 02
+after sym:
+-4, 01
+-14, 02
+21, 12
+2, 21
+end exact concordance
+if combNumber != -1
+before sym:
+-4, 01
+-14, 02
+21, 12
+2, 21
+remplacing 2 with index 21 by adding -2 to index 12
+after sym:
+-4, 01
+-14, 02
+19, 12
+end of loop
+-4, 01
+-14, 02
+19, 12
+
+17   13   -11   
+10   35   -1   
+-4   -14   19   
