@@ -2,42 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Grassman
+namespace Grassman //just integer arithmetic; don't care whether argument is out of range
 {
     abstract class AbstractMatrix
     {
-        public uint W { get; protected set; } //Width
-        public uint H { get; protected set; } //Height
+        public int W { get; protected set; } //Width
+        public int H { get; protected set; } //Height
+
+        public const int MaxWidth = 10; //Maximal allowed width
+        public const int MaxHeigth = 10; //Maximal allowed height
 
         protected int[,] array; //The matrix itself
-                                /*
-                                public AbstractMatrix(uint w, uint h)
-                                {
-                                    array = new int[w, h];
-                                    W = w;
-                                    H = h;
-                                }
-                                */
 
-        public int this[int i, int j] //Allows to address A.array[i, j] as A[i,j]
+        //Checks whether w and h can be the width and the height of the matrix
+        protected bool InvalidRange(int w, int h)
+        {
+            return w <= 0 || w > MaxWidth || h <= 0 || h > MaxHeigth; 
+        }
+
+        //Allows to address A.array[i, j] as A[i,j]
+        public int this[int i, int j]
         {
             get { return array[i, j]; }
-            set { array[i, j] = value; }
+            protected set { array[i, j] = value; }
         }
+
 
     } //Common matrix class
 
     class Matrix : AbstractMatrix
     {
-        /// <summary>
-        /// Creates a w*h matrix, whose elements are random and belong to the [-minvalue, maxvalue] line segment
-        /// </summary>
-        /// <param name="w"></param>
-        /// <param name="h"></param>
-        /// <param name="minvalue"></param>
-        /// <param name="maxvalue"></param>
-        public Matrix(uint w, uint h, int minvalue, int maxvalue)//потом будет по модулю p
+        //Creates a w*h matrix, whose elements are random and belong to the [-minvalue, maxvalue] line segment
+        public Matrix(int w, int h, int minvalue, int maxvalue)
         {
+            if (InvalidRange(w, h))
+                throw new Exception("Sample Text");
             Random r = new Random();
             W = w;
             H = h;
@@ -47,51 +46,40 @@ namespace Grassman
                     this[i, j] = r.Next() % (maxvalue - minvalue + 1) - minvalue;
         }
 
-        /// <summary>
-        /// Creates a w*h matrix, based on given 2-dimensional array
-        /// </summary>
-        /// <param name="w"></param>
-        /// <param name="h"></param>
-        /// <param name="array"></param>
-        public Matrix(uint w, uint h, int[,] array)
+        //Creates a w*h matrix, based on given 2-dimensional array
+        public Matrix(int[,] array)
         {
+            int w = array.GetLength(0), h = array.GetLength(1);
+            if (InvalidRange(w,h))
+                throw new Exception("Sample text");
             W = w;
             H = h;
             this.array = array;
         }
-        /*
-        public Matrix(uint w, uint h)
-        {
-            array = new int[w, h];
-            W = w;
-            H = h;
-        }
-        */
 
     } //General matrix class
 
     class GrassmanMatrix : AbstractMatrix
     {
-        public uint K { get; private set; } //Exterior algebra's subspace dimension
+        public int K { get; private set; } //Exterior algebra's subspace dimension
         int line = 0, column = 0; //Current matrix position (see Loop)
-        List<uint> lineIndex, columnIndex; //Lists of ordered columns' and rows' numbers (see Loop, Minor)
+        List<int> lineIndex, columnIndex; //Lists of ordered columns' and rows' numbers (see Loop, Minor)
         bool loopState = true; //True stands for a loop by line, False - by column (see Loop)
-        Matrix M; //Initial
+        Matrix M; //Initial matrix
 
-        /// <summary>
-        /// Creates an exterior algebra subspace matrix based on M, which has the dimension of k
-        /// </summary>
-        /// <param name="M"></param>
-        /// <param name="k"></param>
-        public GrassmanMatrix(Matrix M, uint k)
+        // Creates an exterior algebra subspace matrix based on M, which has the dimension of k
+        public GrassmanMatrix(Matrix M, int k)
         {
+            if (M == null || k <= 0 || k >= M.W)
+                throw new Exception("Sample text");
             this.M = M;
             K = k;
             W = C(M.W, k);
             H = M.W == M.H ? W : C(M.H, k);
             array = new int[W, H];
-            lineIndex = new List<uint>();
+            lineIndex = new List<int>();
             Loop(k);
+
             column = 0;
             line = 0;
             lineIndex = null;
@@ -99,33 +87,24 @@ namespace Grassman
             loopState = true;
         }
 
-        /// <summary>
-        /// Returns the number of k-combinations from n elements
-        /// </summary>
-        /// <param name="n"></param>
-        /// <param name="k"></param>
-        /// <returns></returns>
-        uint C(uint n, uint k)//сделать
+        // Returns the number of k-combinations from n elements (not exactly, rather specified for this case)
+        int C(int n, int k)
         {
-            if (n < k)
-                return 0;
-            uint ret = 1;
-            for (uint i = 1; i <= k; ++i)
+            int ret = 1;
+            if (k > n >> 1)
+                k = n - k;
+            for (int i = 1; i <= k; ++i)
                 ret = ret * (n - k + i) / i;
             return ret;
         }
 
-
-        /// <summary>
-        /// n nested loops
-        /// </summary>
-        /// <param name="n"></param>
-        void Loop(uint n)
+        // n nested loops
+        void Loop(int n)
         {
             if (n != 0)
             {
-                List<uint> index = loopState ? lineIndex : columnIndex;
-                uint i = index.Any() ? index.Last() + 1 : 0;
+                List<int> index = loopState ? lineIndex : columnIndex;
+                int i = index.Any() ? index.Last() + 1 : 0;
                 int j = index.Count;
                 index.Add(i);
                 for (; i <= W - n; ++i)
@@ -140,7 +119,7 @@ namespace Grassman
                 if (loopState)
                 {
                     loopState = false;
-                    columnIndex = new List<uint>();//index == wlist
+                    columnIndex = new List<int>();//index == wlist
                     Loop(K);
                     loopState = true;
                 }
@@ -151,27 +130,22 @@ namespace Grassman
                     ++line;
                     column = 0;
                 }
-                    
                 else
                     ++column;
             }
         }
 
-        /// <summary>
-        /// j-th minor, whose lines and columns are defined by wlist and hlist
-        /// </summary>
-        /// <param name="j"></param>
-        /// <returns></returns>
-        int Minor(uint j)
+        // j-th minor, whose lines and columns are defined by wlist and hlist
+        int Minor(int j)
         {
             if (j == 1)
-                return M[(int)lineIndex.Last(), (int)columnIndex.Last()];
+                return M[lineIndex.Last(), columnIndex.Last()];
             int sgn = 1, ret = 0, count = columnIndex.Count;
             for (int i = 0; i < count; ++i)
             {
-                uint t = columnIndex[i];
+                int t = columnIndex[i];
                 columnIndex.RemoveAt(i);
-                ret += sgn * M[(int)lineIndex[(int)(K - j)], (int)t] * Minor(j - 1);
+                ret += sgn * M[lineIndex[K - j], t] * Minor(j - 1);
                 columnIndex.Insert(i, t);
                 sgn *= -1;
             }
@@ -184,9 +158,8 @@ namespace Grassman
         static void Main(string[] args)
         {
             int[,] arr = { { 5, -2, 0 }, { 1, 3, 2 }, { 4, 1, 7 } };
-            Matrix A = new Matrix(3, 3, arr);
+            Matrix A = new Matrix(arr);
             GrassmanMatrix G = new GrassmanMatrix(A, 2);
-            Console.ReadKey();
         }
     }
 }
