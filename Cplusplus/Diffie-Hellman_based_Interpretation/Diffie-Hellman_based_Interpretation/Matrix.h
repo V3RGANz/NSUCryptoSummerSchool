@@ -108,7 +108,7 @@ namespace Grassman {
 		unsigned C(unsigned n, unsigned k) { 
 			if (n < k)
 				return 0;
-			unsigned ret = 0;
+			unsigned ret = 1;
 			for (unsigned i = 1; i <= k; ++i)
 				ret = ret * (n - k + i) / i;
 			return ret;
