@@ -5,10 +5,12 @@
 #include <list>
 
 namespace Grassman {
-
 	class AbstractMatrix {
 
 	public:
+		AbstractMatrix() {
+			SetData({});
+		}
 		AbstractMatrix(unsigned height, unsigned width) {
 			resize(height, width);
 		}
@@ -19,7 +21,7 @@ namespace Grassman {
 		unsigned getW() {
 			return w;
 		}
-		
+
 		void setW(unsigned newW) {
 			w = newW;
 			data.resize(w);
@@ -36,23 +38,30 @@ namespace Grassman {
 		}
 
 		~AbstractMatrix() {
-			data.clear;
+			data.clear();
 		}
-
+		vector<int> operator [](unsigned i) { return data[i]; } // Allows use M[i][j] syntax
 	protected:
-		vector<int> operator [](unsigned i) { return data[i]; }
 		void SetData(vector<vector<int>> newData) {
 			data.clear();
-			data = newData;
+			unsigned size = newData.size();
+			setW(size);
+			if (size) {
+				data = newData;
+				setH(data[0].size()); // expected that all columns aligned
+			}
+			else
+				setH(0);
 		}
 	
 	private:
 		unsigned h;
 		unsigned w;
 		vector<vector<int>> data;
-	};
+	}; // Common matrix class
 
-	class Matrix : public AbstractMatrix {
+	class Matrix : AbstractMatrix {
+		Matrix() : AbstractMatrix () {}
 		Matrix(unsigned height, unsigned width, int minvalue, int maxvalue) : AbstractMatrix(height, width) {
 			for (unsigned i = 0; i < width; i++) {
 				for (unsigned j = 0; j < width; j++){
@@ -61,36 +70,35 @@ namespace Grassman {
 			}
 		}
 
-		Matrix(unsigned height, unsigned width, vector<vector<int>> Data) : AbstractMatrix(height, width) {
+		Matrix(vector<vector<int>> Data) : AbstractMatrix() {
 			SetData(Data);
 		}
 		
 	}; //General matrix class
 
 	class GrassmanMatrix : AbstractMatrix {
-	private:
-		unsigned K;
-		unsigned column = 0;
-		unsigned line = 0;
-		list<unsigned> ColumnIndex, LineIndex;
-		Matrix M;
-		bool LoopState = true;
 
-	public:
 		/// <summary>
 		/// Creates an exterior algebra subspace matrix based on M, which has the dimension of k
 		/// </summary>
 		/// <param name="M"></param>
 		/// <param name="k"></param>
-		void BuildGrassman(Matrix M, unsigned k) {
+		GrassmanMatrix(Matrix M, unsigned k) : AbstractMatrix(){
+
+			// source matrix shouldn't be less than k*k
+			if (k < M.getH < M.getW ? M.getH : M.getW) {
+				this->SetData({});
+				return;
+			}
+
 			this->M = M;
 			K = k;
-			
+
 			this->setW(C(M.getW, k));
 			this->setH(M.getH == M.getW ? this->getW : C(M.getH, k));
 
 			vector<vector<int>> data(this->getW, vector<int>(this->getH));
-			LineIndex = *(new list<unsigned>);
+			LineIndex = *(new vector<unsigned>);
 			Loop(k);
 			column = 0;
 			line = 0;
@@ -98,9 +106,17 @@ namespace Grassman {
 			ColumnIndex.clear();
 			LoopState = true;
 		}
+		GrassmanMatrix() : AbstractMatrix() {}
 	private:
+		unsigned K;
+		unsigned column = 0;
+		unsigned line = 0;
+		vector<unsigned> ColumnIndex, LineIndex;
+		Matrix M;
+		bool LoopState = true;
+
 		/// <summary>
-		/// Returns the number of k-combinations from n elements
+		/// Returns the number of combinations of k elements from n-elements set
 		/// </summary>
 		/// <param name="n"></param>
 		/// <param name="k"></param>
@@ -114,11 +130,41 @@ namespace Grassman {
 			return ret;
 		}
 		/// <summary>
-		/// n nested loops
+		/// search of all combination for columns or lines \
+			passing through n nested loops, then call Minor for this\
+			combination
 		/// </summary>
 		/// <param name="n"></param>
 		void Loop(unsigned n) {
-
+			if (n != 0) {
+				//defining current index list
+				vector<unsigned> Index = LoopState ? LineIndex : ColumnIndex;
+				unsigned i = Index.empty ? 0 : Index.back() + 1;
+				
+				// recursive combinations search
+				Index.push_back(i);
+				for (; i <= this->getW - n; i++) {
+					Index.back()++;
+					Loop(n - 1);
+				}
+				Index.pop_back();
+			} 
+			else {
+				if (LoopState) {
+					LoopState = false;
+					Loop(K);
+					LoopState = true;
+				} 
+				else {
+					(*this)[line][column] = Minor(K);
+					if (line == this->getH) {
+						line++;
+						column = 0;
+					}
+					else
+						column++;
+				}
+			}
 		}
 		/// <summary>
 		/// j-th minor, whose lines and columns are defined by LineIndex and ColumnIndex
@@ -126,7 +172,21 @@ namespace Grassman {
 		/// <param name="j"></param>
 		/// <returns></returns>
 		int Minor(unsigned j) {
-			
+			if (j == 1) {
+				return M[LineIndex.back()][ColumnIndex.back()];
+			}
+			else {
+				int sign = 1;
+				int determinant = 1;
+				for (unsigned i = 0; i < ColumnIndex.size(); i++) {
+					unsigned temporaryIndex = ColumnIndex[i];
+					ColumnIndex.erase(ColumnIndex.begin() + i);
+					determinant += sign * M[LineIndex[K - j]][temporaryIndex] * Minor(j - 1);
+					ColumnIndex.insert(ColumnIndex.begin() + i, temporaryIndex);
+					sign *= -1;
+				}
+				return determinant;
+			}
 		}
 	};
 }
