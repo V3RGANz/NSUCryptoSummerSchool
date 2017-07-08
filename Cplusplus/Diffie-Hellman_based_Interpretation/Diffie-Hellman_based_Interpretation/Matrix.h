@@ -6,6 +6,7 @@
 using namespace std;
 
 namespace Grassman {
+
 	class AbstractMatrix {
 	public:
 		AbstractMatrix();
@@ -19,7 +20,7 @@ namespace Grassman {
 		void setH(unsigned newH);
 		void resize(unsigned newH, unsigned newW);
 
-		vector<int> operator [](unsigned i); // Allows use M[i][j] syntax
+		vector<int>& operator [](unsigned i); // Allows use M[i][j] syntax
 
 		void PrintMatrix();
 	protected:
@@ -49,6 +50,7 @@ namespace Grassman {
 		/// <param name="k"></param>
 		GrassmanMatrix(Matrix M, unsigned k);
 		GrassmanMatrix();
+		GrassmanMatrix(vector<vector<int> >);
 		~GrassmanMatrix();
 	private:
 		unsigned K;

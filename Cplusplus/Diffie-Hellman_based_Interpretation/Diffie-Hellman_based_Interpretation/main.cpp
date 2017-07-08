@@ -13,9 +13,6 @@ int main(void) {
 	GrassmanMatrix B(A, 2);
 
 	B.PrintMatrix();
-	A.PrintMatrix();
-	printf("%d\n", A.getW());
-
 
 	return 0;
 }

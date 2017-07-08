@@ -21,7 +21,7 @@ void AbstractMatrix::setW(unsigned newW) {
 }
 void AbstractMatrix::setH(unsigned newH) {
 	h = newH;
-	for (vector<int> line : data) {
+	for (vector<int>& line : data) {
 		line.resize(h);
 	}
 }
@@ -41,7 +41,8 @@ void AbstractMatrix::SetData(vector<vector<int>> newData) {
 		setH(0);
 }
 
-vector<int> AbstractMatrix::operator [](unsigned i) { return data[i]; }
+vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
+
 
 void AbstractMatrix::PrintMatrix() {
 	for (std::vector<int> line : data){
@@ -50,4 +51,3 @@ void AbstractMatrix::PrintMatrix() {
 		std::cout << std::endl;
 	}
 }
-

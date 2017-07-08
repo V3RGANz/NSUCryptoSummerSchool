@@ -2,22 +2,26 @@
 #include <iostream>
 using namespace Grassman;
 
+GrassmanMatrix::GrassmanMatrix(vector<vector<int> > Data) : AbstractMatrix() {
+	SetData(Data);
+}
+
 GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : AbstractMatrix() {
 
 	// source matrix shouldn't be less than k*k
 	if (k > (M.getH() < M.getW() ? M.getH() : M.getW())) { //zaebashit' exception
 		this->SetData({});
-		std::cout<<"failed to create Grassman matrix because " << k << "bigger than (M.getH() < M.getW() ? M.getH() : M.getW()) = " << (M.getH() < M.getW() ? M.getH() : M.getW()) << std::endl;
 		return;
 	}
 
 	this->M = M;
 	K = k;
 
-	this->setW(C(M.getW(), k));
-	this->setH(M.getH() == M.getW() ? this->getW() : C(M.getH(), k));
+	setW(C(M.getW(), k));
+	setH(M.getH() == M.getW() ? getW() : C(M.getH(), k));
 
-	vector<vector<int> > data(this->getW(), vector<int>(this->getH()));
+
+	vector<vector<int> > data(getW(), vector<int>(getH()));
 	LineIndex = *(new vector<unsigned>);
 	Loop(k);
 	column = 0;
@@ -45,7 +49,7 @@ void GrassmanMatrix::Loop(unsigned n) {
 
 		// recursive combinations search
 		(*Index).push_back(i);
-		for (; i <= this->getW() - n; i++) {
+		for (; i <= getW() - n; i++) {
 			Loop(n - 1);
 			(*Index).back()++;
 		}
@@ -59,7 +63,7 @@ void GrassmanMatrix::Loop(unsigned n) {
 		}
 		else {
 			(*this)[line][column] = Minor(K);
-			if (line == this->getH()) {
+			if (column == getW() - 1) {
 				line++;
 				column = 0;
 			}
@@ -74,7 +78,7 @@ int GrassmanMatrix::Minor(unsigned j) {
 	}
 	else {
 		int sign = 1;
-		int determinant = 1;
+		int determinant = 0;
 		for (unsigned i = 0; i < ColumnIndex.size(); i++) {
 			unsigned temporaryIndex = ColumnIndex[i];
 			ColumnIndex.erase(ColumnIndex.begin() + i);
