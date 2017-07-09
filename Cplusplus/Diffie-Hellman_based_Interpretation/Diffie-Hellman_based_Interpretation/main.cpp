@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "Header.h"
 using namespace std;
-using namespace Grassman;
+using namespace mtrx;
 int main(void) {
 	
 	Matrix A( {

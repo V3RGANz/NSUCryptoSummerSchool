@@ -1,6 +1,6 @@
 #include "Matrix.h"
 #include <iostream>
-using namespace Grassman;
+using namespace mtrx;
 
 GrassmanMatrix::GrassmanMatrix(vector<vector<int> > Data) : AbstractMatrix() {
 	SetData(Data);
