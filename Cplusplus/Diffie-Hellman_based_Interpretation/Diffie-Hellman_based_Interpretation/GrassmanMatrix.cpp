@@ -1,17 +1,16 @@
 #include "Matrix.h"
+#include "UnsutableKException.h"
 #include <iostream>
 using namespace mtrx;
 
-GrassmanMatrix::GrassmanMatrix(vector<vector<int> > Data) : GrassmanExtendedMatrix() {
-	SetData(Data);
-}
+GrassmanMatrix::GrassmanMatrix(vector<vector<int> > Data) : GrassmanExtendedMatrix(Data) { }
 
 GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() {
 
 	// source matrix shouldn't be less than k*k
-	if (k > M.getSize()) {
+	if (k == 0  || k > M.getSize()) {
 		this->SetData({});
-		return;
+		throw UnsutableKException();
 	}
 
 	this->M = M;
