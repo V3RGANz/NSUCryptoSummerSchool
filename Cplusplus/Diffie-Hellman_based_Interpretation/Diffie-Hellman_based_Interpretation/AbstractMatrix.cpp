@@ -1,56 +1,53 @@
 #include "Matrix.h"
+#include "incompatibleMatricesException.h"
 #include <iostream>
 
 using namespace mtrx;
 
 
 AbstractMatrix::AbstractMatrix() { SetData({}); }
-AbstractMatrix::AbstractMatrix(unsigned height, unsigned width) { resize(height, width); }
+//AbstractMatrix::AbstractMatrix(unsigned height, unsigned width) { resize(height, width); }
 AbstractMatrix::AbstractMatrix(vector<vector<int>> Data) {
 	SetData(Data);
 }
 AbstractMatrix::AbstractMatrix(unsigned size)
 {
-	vector<vector<int> > newData(size, vector<int>(h, 0));
+	vector<vector<int> > newData(size, vector<int>(size, 0));
 	unsigned j = 0;
 	for (unsigned i = 0; i < size; i++) {
 		newData[i][j++] = 1;
 	}
 	SetData(newData);
 }
-AbstractMatrix::~AbstractMatrix() { data.clear(); }
 
-unsigned AbstractMatrix::getH() {
-	return h;
-}
-unsigned AbstractMatrix::getW() {
-	return w;
-}
+AbstractMatrix::~AbstractMatrix() { /*data.clear(); */}
 
-void AbstractMatrix::setW(unsigned newW) {
-	w = newW;
-	data.resize(w);
-}
-void AbstractMatrix::setH(unsigned newH) {
-	h = newH;
-	for (vector<int>& line : data) {
-		line.resize(h);
+unsigned mtrx::AbstractMatrix::getSize() { return size; }
+
+vector<vector<int>> mtrx::AbstractMatrix::getData() { return data;}
+
+AbstractMatrix mtrx::AbstractMatrix::computePoly(poly::Polynom A) // !!! to be done 
+{
+	unsigned curdegree = 0;
+	AbstractMatrix ret = *this;
+	ret = ret*A[0];
+	for (unsigned int i = 0; i < A.getDegree(); i++) {
+		
 	}
 }
-void AbstractMatrix::resize(unsigned newH, unsigned newW) {
-	setW(newW);
-	setH(newH);
+
+void mtrx::AbstractMatrix::SetSize(unsigned size)
+{
+	data.resize(size);
+	for (vector<int> line : data) {
+		line.resize(size);
+	}
 }
+
 void AbstractMatrix::SetData(vector<vector<int>> newData) {
 	data.clear();
-	unsigned size = newData.size();
-	setW(size);
-	if (size) {
-		data = newData;
-		setH(data[0].size()); // expected that all columns aligned
-	}
-	else
-		setH(0);
+	data = newData;
+	this->size = newData.size();
 }
 
 void AbstractMatrix::PrintMatrix() {
@@ -62,48 +59,70 @@ void AbstractMatrix::PrintMatrix() {
 }
 
 vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
+//AbstractMatrix::operator Matrix(){
+//	return Matrix(data);
+//}
 AbstractMatrix AbstractMatrix::operator -() {
 	AbstractMatrix result(data);
 	for (vector<int>& line : result.data)
 		for (int& value : line)
 			value *= -1;
+	return *this;
 }
 
-AbstractMatrix AbstractMatrix::operator +(AbstractMatrix A) throw (IncompatibleMatricesException) {
+AbstractMatrix AbstractMatrix::operator +(AbstractMatrix A){
 	
-	if (h != A.getH() || w != A.getW())
+	if (size != A.getSize())
 		throw IncompatibleMatricesException();
 
-	Matrix result;
+	AbstractMatrix result(size);
 	
-	for (unsigned i = 0; i < w; i++){
-		for (unsigned j = 0; j < h; j++)
+	for (unsigned i = 0; i < size; i++){
+		for (unsigned j = 0; j < size; j++)
 			result[i][j] = (*this)[i][j] + A[i][j];
 	}
 	return result;
 }
 
-AbstractMatrix AbstractMatrix::operator -(AbstractMatrix A) throw (IncompatibleMatricesException) {
+AbstractMatrix AbstractMatrix::operator -(AbstractMatrix A) {
 
-	if (h != A.getH() || w != A.getW())
+	if (size != A.getSize())
 		throw IncompatibleMatricesException();
 
+	AbstractMatrix result(size);
 
-	AbstractMatrix newA = -A;
-	return *this + newA;
+	for (unsigned i = 0; i < size; i++) {
+		for (unsigned j = 0; j < size; j++)
+			result[i][j] = (*this)[i][j] - A[i][j];
+	}
+	return result;
 }
 
-AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) throw (IncompatibleMatricesException) {
+AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) {
 	// verification of the size of the two matrices
-	if (w != A.getH())
+	if (size != A.getSize())
 		throw IncompatibleMatricesException();
 	
-	AbstractMatrix result(h, A.getW());
+	AbstractMatrix result(size);
 
-	for (unsigned i = 0; i < A.getW(); i++)
-		for (unsigned j = 0; j < h; j++)
-			for (unsigned k = 0; w; k++)
+	for (unsigned i = 0; i < size; i++)
+		for (unsigned j = 0; j < size; j++)
+			for (unsigned k = 0; size; k++)
 				result[i][j] += (*this)[i][k] * A[k][j];
-
 	return result;
+}
+
+AbstractMatrix AbstractMatrix::operator*(int coef)
+{
+	for (vector<int>& line : data)
+		for (int& value : line)
+			value *= coef;
+}
+
+AbstractMatrix mtrx::AbstractMatrix::operator^(unsigned degree)
+{
+	AbstractMatrix ret = *this;
+	for (unsigned i = 0; i < degree; i++)
+		ret = ret*(*this);
+	return ret;
 }

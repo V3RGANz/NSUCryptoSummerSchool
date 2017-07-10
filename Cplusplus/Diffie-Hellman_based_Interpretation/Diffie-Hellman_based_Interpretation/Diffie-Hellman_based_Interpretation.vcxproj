@@ -147,13 +147,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AbstractMatrix.cpp" />
+    <ClCompile Include="GrassmanExtendedMatrix.cpp" />
     <ClCompile Include="GrassmanMatrix.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Polynom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
-    <ClInclude Include="incompatibleMatricesEcxeption.h" />
+    <ClInclude Include="Human.h" />
+    <ClInclude Include="incompatibleMatricesException.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Polynom.h" />
   </ItemGroup>

@@ -1,9 +1,16 @@
-#pragma once
-#include "Matrix.h"
+#ifndef PolyHeader
+#define PolyHeader
+#include <vector>
+
+using namespace std;
 
 namespace poly {
 	class Polynom
 	{
+	private:
+		unsigned degree;
+		vector<int> coefficients;
+
 	public:
 		//Creates undefined polynom
 		Polynom();
@@ -24,15 +31,11 @@ namespace poly {
 		}
 		~Polynom();
 
-	private:
-		unsigned degree;
-		vector<int> coefficients;
+		unsigned getDegree();
+
+		int operator [](unsigned);
+
+
 	};
 }
-poly::Polynom::Polynom()
-{
-}
-
-poly::Polynom::~Polynom()
-{
-}
+#endif // PolyHeader

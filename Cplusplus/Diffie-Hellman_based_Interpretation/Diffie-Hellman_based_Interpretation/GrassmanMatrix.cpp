@@ -2,14 +2,14 @@
 #include <iostream>
 using namespace mtrx;
 
-GrassmanMatrix::GrassmanMatrix(vector<vector<int> > Data) : AbstractMatrix() {
+GrassmanMatrix::GrassmanMatrix(vector<vector<int> > Data) : GrassmanExtendedMatrix() {
 	SetData(Data);
 }
 
-GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : AbstractMatrix() {
+GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() {
 
 	// source matrix shouldn't be less than k*k
-	if (k > (M.getH() < M.getW() ? M.getH() : M.getW())) { //zaebashit' exception
+	if (k > M.getSize()) {
 		this->SetData({});
 		return;
 	}
@@ -17,24 +17,26 @@ GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : AbstractMatrix() {
 	this->M = M;
 	K = k;
 
-	setW(C(M.getW(), k));
-	setH(M.getH() == M.getW() ? getW() : C(M.getH(), k));
-
-
-	vector<vector<int> > data(getW(), vector<int>(getH()));
+	unsigned size = C(M.getSize(), k);
+	vector<int> lines(size);
+	vector<vector<int> > newData(size, lines);
+	SetData(newData);
 	LineIndex = *(new vector<unsigned>);
-	Loop(k);
 	column = 0;
 	line = 0;
+	Loop(K);
 	LineIndex.clear();
-	ColumnIndex.clear();
+	ColumnIndex.clear(); //hqxzrr2
 	LoopState = true;
+
 }
-GrassmanMatrix::GrassmanMatrix() : AbstractMatrix() {}
+GrassmanMatrix::GrassmanMatrix() : GrassmanExtendedMatrix() {}
 
 unsigned GrassmanMatrix::C(unsigned n, unsigned k) {
 	if (n < k)
 		return 0;
+	if (k > n >> 1)
+		k = n - k;
 	unsigned ret = 1;
 	for (unsigned i = 1; i <= k; ++i)
 		ret = ret * (n - k + i) / i;
@@ -49,7 +51,7 @@ void GrassmanMatrix::Loop(unsigned n) {
 
 		// recursive combinations search
 		(*Index).push_back(i);
-		for (; i <= getW() - n; i++) {
+		for (; i <= M.getSize() - n; i++) {
 			Loop(n - 1);
 			(*Index).back()++;
 		}
@@ -61,15 +63,14 @@ void GrassmanMatrix::Loop(unsigned n) {
 			Loop(K);
 			LoopState = true;
 		}
-		else {
+		else
 			(*this)[line][column] = Minor(K);
-			if (column == getW() - 1) {
-				line++;
-				column = 0;
-			}
-			else
-				column++;
+		if (LoopState) {
+			line++;
+			column = 0;
 		}
+		else
+			column++;
 	}
 }
 int GrassmanMatrix::Minor(unsigned j) {
@@ -89,4 +90,5 @@ int GrassmanMatrix::Minor(unsigned j) {
 		return determinant;
 	}
 }
+
 GrassmanMatrix::~GrassmanMatrix() {}

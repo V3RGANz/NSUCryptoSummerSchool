@@ -1,4 +1,31 @@
-﻿  GrassmanMatrix.cpp
-c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(72): warning C4010: однострочный комментарий содержит знак объединения строк
-c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(73): warning C4010: однострочный комментарий содержит знак объединения строк
-  Diffie-Hellman_based_Interpretation.vcxproj -> C:\Users\Дедов\documents\visual studio 2015\Projects\Diffie-Hellman_based_Interpretation\Debug\Diffie-Hellman_based_Interpretation.exe
+﻿  main.cpp
+  GrassmanMatrix.cpp
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\grassmanmatrix.cpp(5): error C2248: mtrx::GrassmanExtendedMatrix::GrassmanExtendedMatrix: невозможно обратиться к private член, объявленному в классе "mtrx::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(69): note:  см. объявление "mtrx::GrassmanExtendedMatrix::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(68): note:  см. объявление "mtrx::GrassmanExtendedMatrix"
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\grassmanmatrix.cpp(5): error C2248: mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix: невозможно обратиться к private член, объявленному в классе "mtrx::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(71): note:  см. объявление "mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(68): note:  см. объявление "mtrx::GrassmanExtendedMatrix"
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\grassmanmatrix.cpp(9): error C2248: mtrx::GrassmanExtendedMatrix::GrassmanExtendedMatrix: невозможно обратиться к private член, объявленному в классе "mtrx::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(69): note:  см. объявление "mtrx::GrassmanExtendedMatrix::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(68): note:  см. объявление "mtrx::GrassmanExtendedMatrix"
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\grassmanmatrix.cpp(9): error C2248: mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix: невозможно обратиться к private член, объявленному в классе "mtrx::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(71): note:  см. объявление "mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(68): note:  см. объявление "mtrx::GrassmanExtendedMatrix"
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\grassmanmatrix.cpp(33): error C2248: mtrx::GrassmanExtendedMatrix::GrassmanExtendedMatrix: невозможно обратиться к private член, объявленному в классе "mtrx::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(69): note:  см. объявление "mtrx::GrassmanExtendedMatrix::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(68): note:  см. объявление "mtrx::GrassmanExtendedMatrix"
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\grassmanmatrix.cpp(33): error C2248: mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix: невозможно обратиться к private член, объявленному в классе "mtrx::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(71): note:  см. объявление "mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(68): note:  см. объявление "mtrx::GrassmanExtendedMatrix"
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\grassmanmatrix.cpp(94): error C2248: mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix: невозможно обратиться к private член, объявленному в классе "mtrx::GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(71): note:  см. объявление "mtrx::GrassmanExtendedMatrix::~GrassmanExtendedMatrix"
+  c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(68): note:  см. объявление "mtrx::GrassmanExtendedMatrix"
+  GrassmanExtendedMatrix.cpp
+  AbstractMatrix.cpp
+  Создание кода...
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\abstractmatrix.cpp(34): error C4716: mtrx::AbstractMatrix::computePoly: должна возвращать значение
+c:\users\дедов\documents\visual studio 2015\projects\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\abstractmatrix.cpp(117): error C4716: mtrx::AbstractMatrix::operator^: должна возвращать значение
+  Компиляция...
+  Matrix.cpp
+  Создание кода...
