@@ -6,7 +6,7 @@ using namespace mtrx;
 
 
 AbstractMatrix::AbstractMatrix() { SetData({}); }
-//AbstractMatrix::AbstractMatrix(unsigned height, unsigned width) { resize(height, width); }
+
 AbstractMatrix::AbstractMatrix(vector<vector<int>> Data) {
 	SetData(Data);
 }
