@@ -8,9 +8,10 @@
 #include "Polynom.h"
 
 using namespace std;
+
 namespace mtrx {
 
-
+	class Matrix;
 	// All matrices are squared
 
 	class AbstractMatrix {
@@ -36,7 +37,7 @@ namespace mtrx {
 		*/
 
 		vector<int>& operator [](unsigned i); // Allows use M[i][j] syntax
-		operator Matrix();
+		operator mtrx::Matrix ();
 		AbstractMatrix operator +(AbstractMatrix);
 		AbstractMatrix operator -(AbstractMatrix A);
 		AbstractMatrix operator *(AbstractMatrix);
@@ -68,6 +69,7 @@ namespace mtrx {
 
 	}; //General matrix class
 	class GrassmanExtendedMatrix : public AbstractMatrix {
+	public:
 		GrassmanExtendedMatrix();
 		GrassmanExtendedMatrix(vector<vector<int> >);
 		~GrassmanExtendedMatrix();

@@ -2,7 +2,7 @@
 #define PolyHeader
 #include <vector>
 #include <ctime>
-
+#include <stdlib.h>
 using namespace std;
 
 namespace poly {
@@ -18,17 +18,9 @@ namespace poly {
 		//Creates polynom with following coefficients with degree coefficients.size() -1
 		Polynom(vector<int> coefficients);
 		//Creates polynom with all coefficients = coef of following degree
-		Polynom(int coef, unsigned degree) {
-			this->degree = degree;
-			coefficients = vector<int>(degree, coef);
-		}
+		Polynom(int coef, unsigned degree);
 		//Creates random polynom of following degree
-		Polynom(unsigned degree) {
-			coefficients = vector<int>(n);
-			for (int& value : coefficients){
-				value = rand();
-			}
-		}
+		Polynom(unsigned degree);
 		~Polynom();
 
 		unsigned getDegree();

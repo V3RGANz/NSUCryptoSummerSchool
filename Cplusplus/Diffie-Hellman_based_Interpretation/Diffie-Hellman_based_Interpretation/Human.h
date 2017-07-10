@@ -3,6 +3,7 @@
 
 
 namespace protocol {
+	
 	class human {
 	public:
 		human();

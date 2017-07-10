@@ -59,13 +59,11 @@ void AbstractMatrix::PrintMatrix() {
 }
 
 vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
-mtrx::AbstractMatrix::operator Matrix()
-{
+// mtrx::AbstractMatrix::operator Matrix()
+
+AbstractMatrix::operator Matrix(){
 	return Matrix(data);
 }
-//AbstractMatrix::operator Matrix(){
-//	return Matrix(data);
-//}
 AbstractMatrix AbstractMatrix::operator -() {
 	AbstractMatrix result(data);
 	for (vector<int>& line : result.data)
