@@ -10,12 +10,12 @@ protocol::human::~human(){}
 
 Matrix human::makeOpenKey(Matrix A, Matrix B, Matrix W, unsigned k)
 {
-	f[0] = Polynom(A.getSize() - 1);
-	f[2] = Polynom(A.getSize() - 1);
+	f[0] = Polynom(A.getSize());
+	f[2] = Polynom(A.getSize());
 	GrassmanMatrix grA(A.computePoly(f[0]), k);
 	GrassmanMatrix grB(B.computePoly(f[0]), k);
-	f[1] = Polynom(grA.getSize() - 1);
-	f[3] = Polynom(grB.getSize() - 1);
+	f[1] = Polynom(grA.getSize());
+	f[3] = Polynom(grB.getSize());
 	left = grA.computePoly(f[2]);
 	right = grB.computePoly(f[3]);
 	return left*W*right;
@@ -38,8 +38,8 @@ protocol::pair::~pair() { }
 void protocol::pair::protocol(unsigned size, unsigned k)
 {
 	this->k = k;
-	A = Matrix(size, minvalue, maxvvalue);
-	B = Matrix(size, minvalue, maxvvalue);
+	A = Matrix(size, minvalue, maxvalue);
+	B = Matrix(size, minvalue, maxvalue);
 	W = Matrix(
 		[size](unsigned k) -> unsigned {
 		if (size < k)
@@ -51,9 +51,11 @@ void protocol::pair::protocol(unsigned size, unsigned k)
 			ret = ret * (size - k + i) / i;
 		return ret;
 	}(k)
-		, minvalue, maxvvalue);
-	Bob.makePrivateKey(Alice.makeOpenKey(A, B, W, k));
-	Alice.makePrivateKey(Bob.makeOpenKey(A, B, W, k));
+		, minvalue, maxvalue);
+	Matrix Alice_open(Alice.makeOpenKey(A, B, W, k));
+	Matrix Bob_open(Bob.makeOpenKey(A, B, W, k));
+	Bob.makePrivateKey(Alice_open);
+	Alice.makePrivateKey(Bob_open);
 }
 
 bool protocol::checkKeys(human h1, human h2) { return h1.key == h2.key; }

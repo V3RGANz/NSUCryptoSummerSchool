@@ -28,12 +28,11 @@ vector<vector<int>> mtrx::AbstractMatrix::getData() { return data;}
 
 AbstractMatrix mtrx::AbstractMatrix::computePoly(poly::Polynom A) // !!! to be done 
 {
-	unsigned curdegree = 0;
-	AbstractMatrix ret = *this;
-	ret = ret*A[0];
+	AbstractMatrix ret(vector<vector<int> >(size, vector<int>(size, 0)));
 	for (unsigned int i = 0; i < A.getDegree(); i++) {
-		
+		ret = ret + ((*this) ^ i)*A[i];
 	}
+	return ret;
 }
 
 void mtrx::AbstractMatrix::SetSize(unsigned size)
@@ -59,17 +58,17 @@ void AbstractMatrix::PrintMatrix() {
 }
 
 vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
-// mtrx::AbstractMatrix::operator Matrix()
-
-AbstractMatrix::operator Matrix(){
+mtrx::AbstractMatrix::operator mtrx::Matrix()
+{
 	return Matrix(data);
 }
+
 AbstractMatrix AbstractMatrix::operator -() {
 	AbstractMatrix result(data);
 	for (vector<int>& line : result.data)
 		for (int& value : line)
 			value *= -1;
-	return *this;
+	return result;
 }
 
 bool mtrx::AbstractMatrix::operator==(AbstractMatrix A)
@@ -121,21 +120,23 @@ AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) {
 
 	for (unsigned i = 0; i < size; i++)
 		for (unsigned j = 0; j < size; j++)
-			for (unsigned k = 0; size; k++)
+			for (unsigned k = 0; k < size; k++)
 				result[i][j] += (*this)[i][k] * A[k][j];
 	return result;
 }
 
 AbstractMatrix AbstractMatrix::operator*(int coef)
 {
-	for (vector<int>& line : data)
+	AbstractMatrix result(data);
+	for (vector<int>& line : result.data)
 		for (int& value : line)
 			value *= coef;
+	return result;
 }
 
 AbstractMatrix mtrx::AbstractMatrix::operator^(unsigned degree)
 {
-	AbstractMatrix ret = *this;
+	AbstractMatrix ret = AbstractMatrix(this->size);
 	for (unsigned i = 0; i < degree; i++)
 		ret = ret*(*this);
 	return ret;

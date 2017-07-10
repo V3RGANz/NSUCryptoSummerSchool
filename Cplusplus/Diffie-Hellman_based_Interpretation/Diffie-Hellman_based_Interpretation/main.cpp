@@ -32,8 +32,13 @@ int main(void) {
 	protocol::human Alice;
 	protocol::human Bob;
 	protocol::pair keyExchange(Alice, Bob);
+	try {
+		keyExchange.protocol(5, 2);
+	}
+	catch (const exception& ex) {
+		cout << ex.what() << endl;
+	}
 
-	keyExchange.protocol(5, 2);
 	if (checkKeys(Alice, Bob))
 		cout << "Bob and Alice have the same key!\n" << endl;
 	else

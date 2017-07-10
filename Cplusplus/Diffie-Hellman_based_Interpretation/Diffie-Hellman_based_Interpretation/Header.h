@@ -4,4 +4,4 @@
 #include "Human.h"
 
 extern int minvalue;
-extern int maxvvalue;
+extern int maxvalue;

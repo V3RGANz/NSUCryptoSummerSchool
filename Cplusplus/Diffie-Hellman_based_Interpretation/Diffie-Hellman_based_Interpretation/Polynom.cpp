@@ -1,5 +1,5 @@
 #include "Polynom.h"
-
+#include "Header.h"
 poly::Polynom::Polynom(){}
 poly::Polynom::Polynom(vector<int> coefficients) {
 	this->coefficients.clear();
@@ -13,8 +13,9 @@ poly::Polynom::Polynom(int coef, unsigned degree) {
 poly::Polynom::Polynom(unsigned degree) {
 	coefficients = vector<int>(degree);
 	for (int& value : coefficients){
-		value = rand();
+		value = rand() % (maxvalue - minvalue + 1);
 	}
+	this->degree = degree;
 }
 poly::Polynom::~Polynom(){}
 
