@@ -1,26 +1,39 @@
 #pragma once
 #include "Header.h"
-namespace human {
 
+
+namespace protocol {
 	class human {
 	public:
+		human();
 		human(unsigned degree);
+		~human();
+		mtrx::Matrix makeOpenKey(mtrx::Matrix A, mtrx::Matrix B, mtrx::Matrix W, unsigned k);
+		void makePrivateKey(mtrx::Matrix conjugate);
 	private:
-		unsigned degree;
-		poly::Polynom f[2];
+		friend bool checkKeys(human h1, human h2);
+		poly::Polynom f[4];
+		mtrx::Matrix left;
+		mtrx::Matrix right;
 		mtrx::Matrix key;
 	};
 
-	class pair () {
+	class pair {
 	public:
 		pair(human& first, human& second);
-		protocol();
+		~pair();
+		void protocol(unsigned size, unsigned k);
 	private:
-		human& pair[2];
+		human& Alice;
+		human& Bob;
 		/*
-		commom (public section);
+		commom properties(public section);
 		*/
+		unsigned size;
+		unsigned k;
 		mtrx::Matrix A;
 		mtrx::Matrix B;
-	}
+		mtrx::Matrix W;
+	};
+
 }

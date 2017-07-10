@@ -6,7 +6,7 @@ using namespace mtrx;
 
 
 AbstractMatrix::AbstractMatrix() { SetData({}); }
-
+//AbstractMatrix::AbstractMatrix(unsigned height, unsigned width) { resize(height, width); }
 AbstractMatrix::AbstractMatrix(vector<vector<int>> Data) {
 	SetData(Data);
 }
@@ -59,6 +59,10 @@ void AbstractMatrix::PrintMatrix() {
 }
 
 vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
+mtrx::AbstractMatrix::operator Matrix()
+{
+	return Matrix(data);
+}
 //AbstractMatrix::operator Matrix(){
 //	return Matrix(data);
 //}
@@ -68,6 +72,18 @@ AbstractMatrix AbstractMatrix::operator -() {
 		for (int& value : line)
 			value *= -1;
 	return *this;
+}
+
+bool mtrx::AbstractMatrix::operator==(AbstractMatrix A)
+{
+	if (size != A.getSize())
+		throw IncompatibleMatricesException();
+
+	for (unsigned i = 0; i < size; i++)
+		for (unsigned j = 0; j < size; j++)
+			if ((*this)[i][j] != A[i][j])
+				return false;
+	return true;
 }
 
 AbstractMatrix AbstractMatrix::operator +(AbstractMatrix A){

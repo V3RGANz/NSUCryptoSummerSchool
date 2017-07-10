@@ -2,6 +2,11 @@
 #include "Header.h"
 using namespace std;
 using namespace mtrx;
+
+
+int minvalue = 100;
+int maxvalue = -100;
+
 int main(void) {
 	
 	//Matrix A( {
@@ -24,8 +29,14 @@ int main(void) {
 
 	Y.PrintMatrix();
 
-	human::human Alice;
-	human::human Bob;
+	protocol::human Alice;
+	protocol::human Bob;
+	protocol::pair keyExchange(Alice, Bob);
 
+	keyExchange.protocol(5, 2);
+	if (checkKeys(Alice, Bob))
+		cout << "Bob and Alice have the same key!\n" << endl;
+	else
+		cout << "Bob and Alice have different keys ;(\n" << endl;
 	return 0;
 }

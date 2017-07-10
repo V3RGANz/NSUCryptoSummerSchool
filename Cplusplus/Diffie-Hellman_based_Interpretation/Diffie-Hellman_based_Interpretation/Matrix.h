@@ -36,13 +36,14 @@ namespace mtrx {
 		*/
 
 		vector<int>& operator [](unsigned i); // Allows use M[i][j] syntax
-		//operator Matrix();
+		operator Matrix();
 		AbstractMatrix operator +(AbstractMatrix);
 		AbstractMatrix operator -(AbstractMatrix A);
 		AbstractMatrix operator *(AbstractMatrix);
 		AbstractMatrix operator *(int);
 		AbstractMatrix operator ^(unsigned);
 		AbstractMatrix operator -();
+		bool operator ==(AbstractMatrix);
 		
 		//Prints all values in rectangular area
 		void PrintMatrix();
@@ -67,7 +68,6 @@ namespace mtrx {
 
 	}; //General matrix class
 	class GrassmanExtendedMatrix : public AbstractMatrix {
-	public:
 		GrassmanExtendedMatrix();
 		GrassmanExtendedMatrix(vector<vector<int> >);
 		~GrassmanExtendedMatrix();

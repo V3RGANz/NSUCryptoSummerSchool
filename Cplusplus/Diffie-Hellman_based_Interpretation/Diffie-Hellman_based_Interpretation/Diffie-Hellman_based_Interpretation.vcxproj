@@ -149,6 +149,7 @@
     <ClCompile Include="AbstractMatrix.cpp" />
     <ClCompile Include="GrassmanExtendedMatrix.cpp" />
     <ClCompile Include="GrassmanMatrix.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Polynom.cpp" />
