@@ -116,7 +116,7 @@ AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) {
 	if (size != A.getSize())
 		throw IncompatibleMatricesException();
 	
-	AbstractMatrix result(size);
+	AbstractMatrix result(vector<vector<int> >(size, vector<int>(size, 0)));;
 
 	for (unsigned i = 0; i < size; i++)
 		for (unsigned j = 0; j < size; j++)
