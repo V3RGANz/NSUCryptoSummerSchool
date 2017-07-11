@@ -1,7 +1,0 @@
-D:\Programs\Grassman\Grassman\bin\Debug\Grassman.exe.config
-C:\Users\user\Desktop\Grassman\Grassman\bin\Debug\Grassman.exe.config
-C:\Users\user\Desktop\Grassman\Grassman\obj\Debug\Grassman.csprojResolveAssemblyReference.cache
-C:\Users\user\Desktop\Grassman\Grassman\bin\Debug\Grassman.exe
-C:\Users\user\Desktop\Grassman\Grassman\bin\Debug\Grassman.pdb
-C:\Users\user\Desktop\Grassman\Grassman\obj\Debug\Grassman.exe
-C:\Users\user\Desktop\Grassman\Grassman\obj\Debug\Grassman.pdb
