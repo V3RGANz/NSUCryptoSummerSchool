@@ -34,7 +34,7 @@ namespace mtrx {
 		virtual AbstractMatrix operator *(int);
 		virtual AbstractMatrix operator ^(unsigned);
 		virtual AbstractMatrix operator -();
-		bool operator ==(AbstractMatrix);
+		virtual bool operator ==(AbstractMatrix);
 		
 		//Prints all values in rectangular area
 		void PrintMatrix();
