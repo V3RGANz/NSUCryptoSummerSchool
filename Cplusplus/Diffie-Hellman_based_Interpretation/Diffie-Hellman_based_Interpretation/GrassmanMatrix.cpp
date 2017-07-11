@@ -3,8 +3,6 @@
 #include <iostream>
 using namespace mtrx;
 
-GrassmanMatrix::GrassmanMatrix(vector<vector<int> > Data) : GrassmanExtendedMatrix(Data) { }
-
 GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() {
 
 	// source matrix shouldn't be less than k*k
@@ -20,30 +18,29 @@ GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() 
 	vector<int> lines(size);
 	vector<vector<int> > newData(size, lines);
 	SetData(newData);
-	LineIndex = *(new vector<unsigned>);
+	Index[0] = *(new vector<unsigned>);
+	Index[1] = *(new vector<unsigned>);
 	column = 0;
 	line = 0;
 	Loop(K);
-	LineIndex.clear();
-	ColumnIndex.clear(); //hqxzrr2
+	Index[0].clear(); // Line's indexes
+	Index[1].clear(); // Column's indexes
+	//hqxzrr2
 	LoopState = true;
 
 }
-GrassmanMatrix::GrassmanMatrix() : GrassmanExtendedMatrix() {}
 
 void GrassmanMatrix::Loop(unsigned n) {
 	if (n != 0) {
 		//defining current index list
-		vector<unsigned>* Index = LoopState ? &LineIndex : &ColumnIndex;
-		unsigned i = (*Index).empty() ? 0 : (*Index).back() + 1;
-
+		unsigned i = Index[LoopState].empty() ? 0 : Index[LoopState].back() + 1;
 		// recursive combinations search
-		(*Index).push_back(i);
+		Index[LoopState].push_back(i);
 		for (; i <= M.getSize() - n; i++) {
 			Loop(n - 1);
 			(*Index).back()++;
 		}
-		(*Index).pop_back();
+		Index[LoopState].pop_back();
 	}
 	else {
 		if (LoopState) {
@@ -63,16 +60,16 @@ void GrassmanMatrix::Loop(unsigned n) {
 }
 int GrassmanMatrix::Minor(unsigned j) {
 	if (j == 1) {
-		return M[LineIndex.back()][ColumnIndex.back()];
+		return M[Index[1].back()][Index[0].back()];
 	}
 	else {
 		int sign = 1;
 		int determinant = 0;
-		for (unsigned i = 0; i < ColumnIndex.size(); i++) {
-			unsigned temporaryIndex = ColumnIndex[i];
-			ColumnIndex.erase(ColumnIndex.begin() + i);
-			determinant += sign * M[LineIndex[K - j]][temporaryIndex] * Minor(j - 1);
-			ColumnIndex.insert(ColumnIndex.begin() + i, temporaryIndex);
+		for (unsigned i = 0; i < Index[0].size(); i++) {
+			unsigned temporaryIndex = Index[0][i];
+			Index[0].erase(Index[0].begin() + i);
+			determinant += sign * M[Index[1][K - j]][temporaryIndex] * Minor(j - 1);
+			Index[0].insert(Index[0].begin() + i, temporaryIndex);
 			sign *= -1;
 		}
 		return determinant;

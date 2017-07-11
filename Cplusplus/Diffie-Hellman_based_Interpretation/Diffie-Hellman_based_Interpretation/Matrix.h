@@ -57,14 +57,13 @@ namespace mtrx {
 		Matrix(unsigned size);
 		Matrix(unsigned size, int minvalue, int maxvalue);
 		Matrix(poly::Polynom p, Matrix A);
-		Matrix(vector<vector<int> > Data);
 		~Matrix();
 
 	}; //General matrix class
 
 	class GrassmanExtendedMatrix : public AbstractMatrix {
 	public:
-		GrassmanExtendedMatrix(vector<vector<int> >);
+		GrassmanExtendedMatrix();
 		~GrassmanExtendedMatrix();
 	}; //Extended Grassman algebra matrix class
 
@@ -73,15 +72,13 @@ namespace mtrx {
 	public:
 		// Creates matrix, that represent matrix M in k-grade Grassman space
 		GrassmanMatrix(Matrix M, unsigned k);
-		GrassmanMatrix();
-		GrassmanMatrix(vector<vector<int> >);
 		~GrassmanMatrix();
 
 	private:
 		unsigned K;
 		unsigned column;
 		unsigned line;
-		vector<unsigned> ColumnIndex, LineIndex;
+		vector<unsigned> Index[2];
 		Matrix M;
 		bool LoopState = true;
 		//	search of all combination for columns or lines 

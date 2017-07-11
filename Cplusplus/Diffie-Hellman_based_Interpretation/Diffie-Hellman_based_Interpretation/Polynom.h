@@ -3,6 +3,8 @@
 #include <vector>
 #include <ctime>
 #include <stdlib.h>
+#include "Matrix.h"
+
 using namespace std;
 
 namespace poly {
@@ -11,7 +13,6 @@ namespace poly {
 	private:
 		unsigned degree;
 		vector<int> coefficients;
-
 	public:
 		//Creates undefined polynom
 		Polynom();
@@ -27,7 +28,6 @@ namespace poly {
 		mtrx::Matrix operator()(mtrx::Matrix A);
 
 		unsigned getDegree();
-
 	};
 }
 #endif // PolyHeader
