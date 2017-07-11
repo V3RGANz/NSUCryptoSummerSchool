@@ -1,7 +1,6 @@
 #include "Matrix.h"
 using namespace mtrx;
 
-
 Matrix::Matrix() : AbstractMatrix() {}
 Matrix::Matrix(unsigned size) : AbstractMatrix(size) { }
 Matrix::Matrix(unsigned size, int minvalue, int maxvalue) {

@@ -10,12 +10,12 @@ protocol::human::~human(){}
 
 Matrix human::makeOpenKey(Matrix A, Matrix B, Matrix W, unsigned k)
 {
-	f[0] = Polynom(A.getSize());
-	f[2] = Polynom(A.getSize());
-	GrassmanMatrix grA(A.computePoly(f[0]), k);
-	GrassmanMatrix grB(B.computePoly(f[0]), k);
-	f[1] = Polynom(grA.getSize());
-	f[3] = Polynom(grB.getSize());
+	f = Polynom(A.getSize());
+	h = Polynom(A.getSize());
+	GrassmanMatrix grA(A.computePoly(f), k);
+	GrassmanMatrix grB(B.computePoly(h), k);
+	g = Polynom(grA.getSize());
+	u = Polynom(grB.getSize());
 	left = grA.computePoly(f[2]);
 	right = grB.computePoly(f[3]);
 	return left*W*right;

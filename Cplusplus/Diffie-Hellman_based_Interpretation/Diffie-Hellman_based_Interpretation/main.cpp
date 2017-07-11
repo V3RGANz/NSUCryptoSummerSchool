@@ -31,10 +31,9 @@ int main(void) {
 	GrassmanMatrix Y(X, k);
 	Y.PrintMatrix();
 
-
+	//Protocol check
 	cout << endl << endl
 		<< "Protocol checking...\n";
-
 
 	protocol::human Alice;
 	protocol::human Bob;
@@ -50,8 +49,6 @@ int main(void) {
 		cout << "Bob and Alice have the same key!" << endl;
 	else
 		cout << "Bob and Alice have different keys ;(" << endl;
-
-
 
 	return 0;
 }

@@ -13,7 +13,10 @@ namespace protocol {
 		void makePrivateKey(mtrx::Matrix conjugate);
 	private:
 		friend bool checkKeys(human h1, human h2);
-		poly::Polynom f[4];
+		poly::Polynom f;
+		poly::Polynom g;
+		poly::Polynom h;
+		poly::Polynom u;
 		mtrx::Matrix left;
 		mtrx::Matrix right;
 		mtrx::Matrix key;

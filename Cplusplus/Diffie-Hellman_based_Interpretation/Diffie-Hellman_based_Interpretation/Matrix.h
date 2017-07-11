@@ -70,7 +70,6 @@ namespace mtrx {
 	}; //General matrix class
 	class GrassmanExtendedMatrix : public AbstractMatrix {
 	public:
-		GrassmanExtendedMatrix();
 		GrassmanExtendedMatrix(vector<vector<int> >);
 		~GrassmanExtendedMatrix();
 	};
