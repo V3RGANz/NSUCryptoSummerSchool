@@ -23,10 +23,10 @@ namespace poly {
 		Polynom(unsigned degree);
 		~Polynom();
 
+		//Compute result of current polynom of following matrix
+		mtrx::Matrix operator()(mtrx::Matrix A);
+
 		unsigned getDegree();
-
-		int operator [](unsigned);
-
 
 	};
 }

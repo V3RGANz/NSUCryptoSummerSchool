@@ -155,6 +155,7 @@
     <ClCompile Include="Polynom.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Hack.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="incompatibleMatricesException.h" />

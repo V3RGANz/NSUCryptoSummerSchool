@@ -13,18 +13,18 @@ poly::Polynom::Polynom(int coef, unsigned degree) {
 poly::Polynom::Polynom(unsigned degree) {
 	coefficients = vector<int>(degree);
 	for (int& value : coefficients){
-		value = rand() % (maxvalue - minvalue + 1);
+		value = minvalue + rand() % (maxvalue - minvalue + 1);
 	}
 	this->degree = degree;
 }
 poly::Polynom::~Polynom(){}
 
-unsigned poly::Polynom::getDegree()
+mtrx::Matrix poly::Polynom::operator()(mtrx::Matrix A)
 {
-	return degree;
+	mtrx::Matrix ret(vector<vector<int> >(A.getSize(), vector<int>(A.getSize(), 0)));
+	for (unsigned int i = 0; i < degree; i++)
+		ret = ret + (A ^ i)*coefficients[i];
+	return ret;
 }
 
-int poly::Polynom::operator[](unsigned index)
-{
-	return coefficients[index];
-}
+unsigned poly::Polynom::getDegree() { return degree; }

@@ -6,10 +6,7 @@ using namespace mtrx;
 
 
 AbstractMatrix::AbstractMatrix() { SetData({}); }
-//AbstractMatrix::AbstractMatrix(unsigned height, unsigned width) { resize(height, width); }
-AbstractMatrix::AbstractMatrix(vector<vector<int>> Data) {
-	SetData(Data);
-}
+
 AbstractMatrix::AbstractMatrix(unsigned size)
 {
 	vector<vector<int> > newData(size, vector<int>(size, 0));
@@ -20,20 +17,10 @@ AbstractMatrix::AbstractMatrix(unsigned size)
 	SetData(newData);
 }
 
-AbstractMatrix::~AbstractMatrix() { /*data.clear(); */}
+AbstractMatrix::~AbstractMatrix() {}
 
 unsigned mtrx::AbstractMatrix::getSize() { return size; }
-
 vector<vector<int>> mtrx::AbstractMatrix::getData() { return data;}
-
-AbstractMatrix mtrx::AbstractMatrix::computePoly(poly::Polynom A) // !!! to be done 
-{
-	AbstractMatrix ret(vector<vector<int> >(size, vector<int>(size, 0)));
-	for (unsigned int i = 0; i < A.getDegree(); i++) {
-		ret = ret + ((*this) ^ i)*A[i];
-	}
-	return ret;
-}
 
 void mtrx::AbstractMatrix::SetSize(unsigned size)
 {
@@ -58,16 +45,15 @@ void AbstractMatrix::PrintMatrix() {
 }
 
 vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
-mtrx::AbstractMatrix::operator mtrx::Matrix()
-{
-	return Matrix(data);
-}
+AbstractMatrix::operator mtrx::Matrix() { return Matrix(data); }
 
 AbstractMatrix AbstractMatrix::operator -() {
-	AbstractMatrix result(data);
-	for (vector<int>& line : result.data)
+	vector<vector<int> > data;
+	for (vector<int>& line : data)
 		for (int& value : line)
 			value *= -1;
+	AbstractMatrix result;
+	result.SetData(data);
 	return result;
 }
 
@@ -88,12 +74,14 @@ AbstractMatrix AbstractMatrix::operator +(AbstractMatrix A){
 	if (size != A.getSize())
 		throw IncompatibleMatricesException();
 
-	AbstractMatrix result(size);
+	vector<vector<int> > newdata(size, vector<int>(size));
 	
 	for (unsigned i = 0; i < size; i++){
 		for (unsigned j = 0; j < size; j++)
-			result[i][j] = (*this)[i][j] + A[i][j];
+			newdata[i][j] = (*this)[i][j] + A[i][j];
 	}
+	AbstractMatrix result;
+	result.SetData(newdata);
 	return result;
 }
 
@@ -102,12 +90,14 @@ AbstractMatrix AbstractMatrix::operator -(AbstractMatrix A) {
 	if (size != A.getSize())
 		throw IncompatibleMatricesException();
 
-	AbstractMatrix result(size);
+	vector<vector<int> > newdata(size, vector<int>(size));
 
 	for (unsigned i = 0; i < size; i++) {
 		for (unsigned j = 0; j < size; j++)
-			result[i][j] = (*this)[i][j] - A[i][j];
+			newdata[i][j] = (*this)[i][j] - A[i][j];
 	}
+	AbstractMatrix result;
+	result.SetData(newdata);
 	return result;
 }
 
@@ -116,21 +106,25 @@ AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) {
 	if (size != A.getSize())
 		throw IncompatibleMatricesException();
 	
-	AbstractMatrix result(vector<vector<int> >(size, vector<int>(size, 0)));;
+	vector<vector<int> > newdata(size, vector<int>(size, 0));
 
 	for (unsigned i = 0; i < size; i++)
 		for (unsigned j = 0; j < size; j++)
 			for (unsigned k = 0; k < size; k++)
-				result[i][j] += (*this)[i][k] * A[k][j];
+				newdata[i][j] += (*this)[i][k] * A[k][j];
+	AbstractMatrix result;
+	result.SetData(newdata);
 	return result;
 }
 
 AbstractMatrix AbstractMatrix::operator*(int coef)
 {
-	AbstractMatrix result(data);
-	for (vector<int>& line : result.data)
+	vector<vector<int> > newdata;
+	for (vector<int>& line : newdata)
 		for (int& value : line)
 			value *= coef;
+	AbstractMatrix result;
+	result.SetData(newdata);
 	return result;
 }
 

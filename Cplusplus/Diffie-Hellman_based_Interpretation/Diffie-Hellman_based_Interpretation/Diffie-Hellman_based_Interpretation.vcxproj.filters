@@ -16,28 +16,37 @@
     <Filter Include="Заголовочные файлы\Exceptions">
       <UniqueIdentifier>{a213217f-7cf6-40ca-8526-272e104fddfd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Matrices">
+      <UniqueIdentifier>{111c4e6b-ce52-474e-a232-b3c51b1f23c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Polynom">
+      <UniqueIdentifier>{2b5e7a19-8339-404e-8d7d-ed0a87dd9aa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Protocol">
+      <UniqueIdentifier>{f85fb84e-d321-48e3-a30c-2f7186914667}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="Matrix.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="GrassmanMatrix.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
     <ClCompile Include="AbstractMatrix.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="Polynom.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Файлы исходного кода\Matrices</Filter>
     </ClCompile>
     <ClCompile Include="GrassmanExtendedMatrix.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Файлы исходного кода\Matrices</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassmanMatrix.cpp">
+      <Filter>Файлы исходного кода\Matrices</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Файлы исходного кода\Matrices</Filter>
+    </ClCompile>
+    <ClCompile Include="Polynom.cpp">
+      <Filter>Файлы исходного кода\Polynom</Filter>
     </ClCompile>
     <ClCompile Include="Human.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Файлы исходного кода\Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="incompatibleMatricesException.h">
       <Filter>Заголовочные файлы\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Hack.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

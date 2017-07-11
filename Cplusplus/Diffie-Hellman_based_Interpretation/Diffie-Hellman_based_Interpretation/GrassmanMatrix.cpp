@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "Header.h"
 #include "UnsutableKException.h"
 #include <iostream>
 using namespace mtrx;
@@ -30,17 +30,6 @@ GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() 
 
 }
 GrassmanMatrix::GrassmanMatrix() : GrassmanExtendedMatrix() {}
-
-unsigned GrassmanMatrix::C(unsigned n, unsigned k) {
-	if (n < k)
-		return 0;
-	if (k > n >> 1)
-		k = n - k;
-	unsigned ret = 1;
-	for (unsigned i = 1; i <= k; ++i)
-		ret = ret * (n - k + i) / i;
-	return ret;
-}
 
 void GrassmanMatrix::Loop(unsigned n) {
 	if (n != 0) {
