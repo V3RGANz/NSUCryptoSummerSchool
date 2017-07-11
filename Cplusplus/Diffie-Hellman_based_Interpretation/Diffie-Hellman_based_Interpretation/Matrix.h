@@ -1,16 +1,15 @@
-#ifndef MatrixHeader
-#define MatrixHeader
+#pragma once
+//#ifndef MatrixHeader
+//#define MatrixHeader
 
 #include <ctime>
 #include <stdlib.h>
 #include <vector>
-#include "Polynom.h"
 
 using namespace std;
 
-namespace mtrx {
+namespace protocol {
 	// All matrices are squared
-	class Matrix;
 
 	class AbstractMatrix {
 	public:
@@ -26,7 +25,7 @@ namespace mtrx {
 
 		vector<int>& operator [](unsigned i); // Allows use M[i][j] syntax
 		
-		operator mtrx::Matrix (); // прямо говоря, это костыль
+		operator Matrix (); // прямо говоря, это костыль
 
 		virtual AbstractMatrix operator +(AbstractMatrix);
 		virtual AbstractMatrix operator -(AbstractMatrix A);
@@ -56,7 +55,7 @@ namespace mtrx {
 		Matrix(vector<vector<int> > Data);
 		Matrix(unsigned size);
 		Matrix(unsigned size, int minvalue, int maxvalue);
-		Matrix(poly::Polynom p, Matrix A);
+		Matrix(Polynom p, Matrix A);
 		~Matrix();
 
 	}; //General matrix class
@@ -78,7 +77,7 @@ namespace mtrx {
 		unsigned K;
 		unsigned column;
 		unsigned line;
-		vector<unsigned> Index[2];
+		vector<unsigned> Index[2]; // Lines and Columns index combinations
 		Matrix M;
 		bool LoopState = true;
 		//	search of all combination for columns or lines 
@@ -91,4 +90,4 @@ namespace mtrx {
 }
 
 
-#endif // MatrixHeader
+//#endif // MatrixHeader

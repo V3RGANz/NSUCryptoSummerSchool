@@ -1,22 +1,23 @@
-#include "Polynom.h"
 #include "Header.h"
-poly::Polynom::Polynom(){}
+#include "Polynom.h"
+#include "Matrix.h"
+Polynom::Polynom(){}
 
-poly::Polynom::Polynom(unsigned degree) {
+Polynom::Polynom(unsigned degree) {
 	coefficients = vector<int>(degree);
 	for (int& value : coefficients){
 		value = minvalue + rand() % (maxvalue - minvalue + 1);
 	}
 	this->degree = degree;
 }
-poly::Polynom::~Polynom(){}
+Polynom::~Polynom(){}
 
-mtrx::Matrix poly::Polynom::operator()(mtrx::Matrix A)
+Matrix Polynom::operator()(Matrix A)
 {
-	mtrx::Matrix ret(vector<vector<int> >(A.getSize(), vector<int>(A.getSize(), 0)));
+	Matrix ret(vector<vector<int> >(A.getSize(), vector<int>(A.getSize(), 0)));
 	for (unsigned int i = 0; i < degree; i++)
 		ret = ret + (A ^ i)*coefficients[i];
 	return ret;
 }
 
-unsigned poly::Polynom::getDegree() { return degree; }
+unsigned Polynom::getDegree() { return degree; }

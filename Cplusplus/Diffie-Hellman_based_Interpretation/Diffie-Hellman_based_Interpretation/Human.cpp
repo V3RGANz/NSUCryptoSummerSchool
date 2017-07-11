@@ -1,7 +1,9 @@
+#include "Header.h"
+#include "Matrix.h"
+#include "Polynom.h"
 #include "Human.h"
+
 using namespace protocol;
-using namespace mtrx;
-using namespace poly;
 
 human::human(){}
 human::~human(){}
@@ -19,7 +21,7 @@ Matrix human::makePublicKey(Matrix A, Matrix B, Matrix W, unsigned k)
 	return left*W*right;
 }
 
-void protocol::human::makePrivateKey(mtrx::Matrix conjugate)
+void human::makePrivateKey(Matrix conjugate)
 {
 	key = left*conjugate*right;
 }

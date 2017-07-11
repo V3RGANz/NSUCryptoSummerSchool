@@ -1,9 +1,9 @@
-#include "Matrix.h"
-#include "incompatibleMatricesException.h"
 #include <iostream>
+#include "incompatibleMatricesException.h"
+#include "Header.h"
+#include "Matrix.h"
 
-using namespace mtrx;
-
+using namespace protocol;
 
 AbstractMatrix::AbstractMatrix() { SetData({}); }
 
@@ -19,10 +19,10 @@ AbstractMatrix::AbstractMatrix(unsigned size)
 
 AbstractMatrix::~AbstractMatrix() {}
 
-unsigned mtrx::AbstractMatrix::getSize() { return size; }
-vector<vector<int>> mtrx::AbstractMatrix::getData() { return data;}
+unsigned AbstractMatrix::getSize() { return size; }
+vector<vector<int>> AbstractMatrix::getData() { return data;}
 
-void mtrx::AbstractMatrix::SetSize(unsigned size)
+void AbstractMatrix::SetSize(unsigned size)
 {
 	data.resize(size);
 	for (vector<int> line : data) {
@@ -45,7 +45,7 @@ void AbstractMatrix::PrintMatrix() {
 }
 
 vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
-AbstractMatrix::operator mtrx::Matrix() { return Matrix(data); }
+AbstractMatrix::operator Matrix() { return Matrix(data); }
 
 AbstractMatrix AbstractMatrix::operator -() {
 	vector<vector<int> > data;
@@ -57,7 +57,7 @@ AbstractMatrix AbstractMatrix::operator -() {
 	return result;
 }
 
-bool mtrx::AbstractMatrix::operator==(AbstractMatrix A)
+bool AbstractMatrix::operator==(AbstractMatrix A)
 {
 	if (size != A.getSize())
 		throw IncompatibleMatricesException();
@@ -119,7 +119,7 @@ AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) {
 
 AbstractMatrix AbstractMatrix::operator*(int coef)
 {
-	vector<vector<int> > newdata;
+	vector<vector<int> > newdata = data;
 	for (vector<int>& line : newdata)
 		for (int& value : line)
 			value *= coef;
@@ -128,7 +128,7 @@ AbstractMatrix AbstractMatrix::operator*(int coef)
 	return result;
 }
 
-AbstractMatrix mtrx::AbstractMatrix::operator^(unsigned degree)
+AbstractMatrix AbstractMatrix::operator^(unsigned degree)
 {
 	AbstractMatrix ret = AbstractMatrix(this->size);
 	for (unsigned i = 0; i < degree; i++)

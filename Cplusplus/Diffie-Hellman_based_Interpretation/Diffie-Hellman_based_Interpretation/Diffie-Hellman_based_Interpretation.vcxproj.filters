@@ -48,6 +48,9 @@
     <ClCompile Include="Human.cpp">
       <Filter>Файлы исходного кода\Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="Combinations.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">

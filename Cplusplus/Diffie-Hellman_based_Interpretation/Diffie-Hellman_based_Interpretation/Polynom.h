@@ -1,16 +1,16 @@
-#ifndef PolyHeader
-#define PolyHeader
+#pragma once
+//#ifndef PolyHeader
+//#define PolyHeader
 #include <vector>
 #include <ctime>
 #include <stdlib.h>
-#include "Matrix.h"
 
-namespace poly {
+namespace protocol {
 	class Polynom
 	{
 	private:
 		unsigned degree;
-		vector<int> coefficients;
+		std::vector<int> coefficients;
 	public:
 		//Creates undefined polynom
 		Polynom();
@@ -19,9 +19,9 @@ namespace poly {
 		~Polynom();
 
 		//Compute result of current polynom of following matrix
-		mtrx::Matrix operator()(mtrx::Matrix A);
+		Matrix operator()(Matrix A);
 
 		unsigned getDegree();
 	};
 }
-#endif // PolyHeader
+//#endif // PolyHeader

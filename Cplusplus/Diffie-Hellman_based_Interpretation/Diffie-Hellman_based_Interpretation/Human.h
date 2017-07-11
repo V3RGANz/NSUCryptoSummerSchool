@@ -1,11 +1,7 @@
 #pragma once
-#include "Header.h"
-
-using namespace mtrx;
-using namespace poly;
 
 namespace protocol {
-	
+	bool checkKeys(human h1, human h2);
 	class human {
 	public:
 		human();

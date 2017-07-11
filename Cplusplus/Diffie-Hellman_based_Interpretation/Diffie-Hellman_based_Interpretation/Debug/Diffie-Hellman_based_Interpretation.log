@@ -1,58 +1,11 @@
 ﻿  main.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2653: mtrx: не является именем класса или пространства имен
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2143: синтаксическая ошибка: отсутствие ";" перед "("
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2061: синтаксическая ошибка: идентификатор "Matrix"
-  Polynom.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(59): error C2653: poly: не является именем класса или пространства имен
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(59): error C2061: синтаксическая ошибка: идентификатор "Polynom"
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(59): error C2535: mtrx::Matrix::Matrix(void): функция-член уже определена или объявлена
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.h(54): note:  см. объявление "mtrx::Matrix::Matrix"
-  Matrix.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2653: mtrx: не является именем класса или пространства имен
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2143: синтаксическая ошибка: отсутствие ";" перед "("
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2061: синтаксическая ошибка: идентификатор "Matrix"
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(14): error C2064: результатом вычисления фрагмента не является функция, принимающая 1 аргументов
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(14): note: класс не определяет "operator()" или пользовательский оператор преобразования в указатель на функцию или ссылку на функцию, принимающий подходящее число аргументов
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(15): error C2664: "mtrx::AbstractMatrix::AbstractMatrix(const mtrx::AbstractMatrix &)": невозможно преобразовать аргумент 1 из "std::vector<std::vector<int,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>" в "unsigned int"
-          with
-          [
-              _Ty=int
-          ]
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(15): note: Для выполнения данного преобразования нет доступного оператора преобразования, определенного пользователем, или вызов оператора невозможен
-  Human.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2653: mtrx: не является именем класса или пространства имен
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2143: синтаксическая ошибка: отсутствие ";" перед "("
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2061: синтаксическая ошибка: идентификатор "Matrix"
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(14): error C2064: результатом вычисления фрагмента не является функция, принимающая 1 аргументов
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(14): note: класс не определяет "operator()" или пользовательский оператор преобразования в указатель на функцию или ссылку на функцию, принимающий подходящее число аргументов
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(14): error C2664: "mtrx::GrassmanMatrix::GrassmanMatrix(const mtrx::GrassmanMatrix &)": невозможно преобразовать аргумент 1 из "unsigned int" в "const mtrx::GrassmanMatrix &"
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(14): note: Причина: невозможно преобразовать "unsigned int" в "const mtrx::GrassmanMatrix"
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(14): note: Ни один конструктор не смог принять исходный тип, либо разрешение перегрузки конструктора неоднозначно
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(15): error C2064: результатом вычисления фрагмента не является функция, принимающая 1 аргументов
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(15): note: класс не определяет "operator()" или пользовательский оператор преобразования в указатель на функцию или ссылку на функцию, принимающий подходящее число аргументов
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(15): error C2664: "mtrx::GrassmanMatrix::GrassmanMatrix(const mtrx::GrassmanMatrix &)": невозможно преобразовать аргумент 1 из "unsigned int" в "const mtrx::GrassmanMatrix &"
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(15): note: Причина: невозможно преобразовать "unsigned int" в "const mtrx::GrassmanMatrix"
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(15): note: Ни один конструктор не смог принять исходный тип, либо разрешение перегрузки конструктора неоднозначно
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(18): error C2064: результатом вычисления фрагмента не является функция, принимающая 1 аргументов
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(18): note: класс не определяет "operator()" или пользовательский оператор преобразования в указатель на функцию или ссылку на функцию, принимающий подходящее число аргументов
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(19): error C2064: результатом вычисления фрагмента не является функция, принимающая 1 аргументов
-  c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\human.cpp(19): note: класс не определяет "operator()" или пользовательский оператор преобразования в указатель на функцию или ссылку на функцию, принимающий подходящее число аргументов
-  GrassmanMatrix.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2653: mtrx: не является именем класса или пространства имен
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2143: синтаксическая ошибка: отсутствие ";" перед "("
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2061: синтаксическая ошибка: идентификатор "Matrix"
-  GrassmanExtendedMatrix.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2653: mtrx: не является именем класса или пространства имен
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2143: синтаксическая ошибка: отсутствие ";" перед "("
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2061: синтаксическая ошибка: идентификатор "Matrix"
-  AbstractMatrix.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2653: mtrx: не является именем класса или пространства имен
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2143: синтаксическая ошибка: отсутствие ";" перед "("
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.h(28): error C2061: синтаксическая ошибка: идентификатор "Matrix"
+  Combinations.cpp
   Создание кода...
+  Пропуск... (изменения не обнаружены)
+  Polynom.cpp
+  Matrix.cpp
+  Human.cpp
+  GrassmanMatrix.cpp
+  GrassmanExtendedMatrix.cpp
+  AbstractMatrix.cpp
+  Diffie-Hellman_based_Interpretation.vcxproj -> C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\Cplusplus\Diffie-Hellman_based_Interpretation\Debug\Diffie-Hellman_based_Interpretation.exe

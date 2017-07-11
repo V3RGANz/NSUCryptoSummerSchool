@@ -1,19 +1,24 @@
-#pragma once
-#include "Matrix.h"
-#include "Polynom.h"
-#include "Human.h"
-
-//Returns the number of combinations of k elements from n-elements set
-unsigned C(unsigned n, unsigned k) {
-	if (n < k)
-		return 0;
-	if (k > n >> 1)
-		k = n - k;
-	unsigned ret = 1;
-	for (unsigned i = 1; i <= k; ++i)
-		ret = ret * (n - k + i) / i;
-	return ret;
-}
+#ifndef MAIN_HEADER
+#define MAIN_HEADER
 
 extern int minvalue;
 extern int maxvalue;
+
+namespace protocol {
+	class AbstractMatrix;
+	class Matrix;	
+	class GrassmanMatrix;
+	class GrassmanExtendedMatrix;
+
+	class Polynom;
+	
+	class human;
+	
+	class pair;
+}
+
+using namespace protocol;
+
+//Returns the number of combinations of k elements from n-elements set
+unsigned C(unsigned n, unsigned k);
+#endif //MAIN_HEADER

@@ -1,7 +1,7 @@
 #include "Header.h"
+#include "Matrix.h"
 #include "UnsutableKException.h"
 #include <iostream>
-using namespace mtrx;
 
 GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() {
 
@@ -22,11 +22,10 @@ GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() 
 	Index[1] = *(new vector<unsigned>);
 	column = 0;
 	line = 0;
+	LoopState = 1;
 	Loop(K);
-	Index[0].clear(); // Line's indexes
-	Index[1].clear(); // Column's indexes
-	//hqxzrr2
-	LoopState = true;
+	Index[0].clear();
+	Index[1].clear(); //hqxzrr2
 
 }
 
@@ -38,15 +37,15 @@ void GrassmanMatrix::Loop(unsigned n) {
 		Index[LoopState].push_back(i);
 		for (; i <= M.getSize() - n; i++) {
 			Loop(n - 1);
-			(*Index).back()++;
+			Index[LoopState].back()++;
 		}
 		Index[LoopState].pop_back();
 	}
 	else {
 		if (LoopState) {
-			LoopState = false;
+			LoopState = 0;
 			Loop(K);
-			LoopState = true;
+			LoopState = 1;
 		}
 		else
 			(*this)[line][column] = Minor(K);

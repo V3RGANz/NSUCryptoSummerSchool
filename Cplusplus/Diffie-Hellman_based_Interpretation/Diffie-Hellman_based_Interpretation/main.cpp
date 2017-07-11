@@ -1,8 +1,11 @@
 #include <iostream>
 #include "Header.h"
-using namespace std;
-using namespace mtrx;
 
+#include "Matrix.h"
+#include "Polynom.h"
+#include "Human.h"
+
+using namespace std;
 
 int minvalue = 100;
 int maxvalue = -100;

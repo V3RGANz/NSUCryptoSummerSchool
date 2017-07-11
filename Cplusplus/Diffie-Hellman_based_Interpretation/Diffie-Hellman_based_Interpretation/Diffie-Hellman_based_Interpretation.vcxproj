@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AbstractMatrix.cpp" />
+    <ClCompile Include="Combinations.cpp" />
     <ClCompile Include="GrassmanExtendedMatrix.cpp" />
     <ClCompile Include="GrassmanMatrix.cpp" />
     <ClCompile Include="Human.cpp" />
