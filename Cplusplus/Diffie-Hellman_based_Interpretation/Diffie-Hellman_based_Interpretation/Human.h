@@ -1,28 +1,29 @@
 #pragma once
 #include "Header.h"
 
+using namespace mtrx;
+using namespace poly;
 
 namespace protocol {
 	
 	class human {
 	public:
 		human();
-		// create human with polynoms of following degree
-		human(unsigned degree);
 		~human();
 		// public method that returns public key based on following parametrs
-		mtrx::Matrix makePublicKey(mtrx::Matrix A, mtrx::Matrix B, mtrx::Matrix W, unsigned k);
+		Matrix makePublicKey(Matrix A, Matrix B, Matrix W, unsigned k);
 		// make private key based on partner's public key
-		void makePrivateKey(mtrx::Matrix conjugate);
+		void makePrivateKey(Matrix conjugate);
 	private:
+		// compare identity of private keys 
 		friend bool checkKeys(human h1, human h2);
-		poly::Polynom f;
-		poly::Polynom g;
-		poly::Polynom h;
-		poly::Polynom u;
-		mtrx::Matrix left;
-		mtrx::Matrix right;
-		mtrx::Matrix key;
+		Polynom f;
+		Polynom g;
+		Polynom h;
+		Polynom u;
+		Matrix left;
+		Matrix right;
+		Matrix key;
 	}; //private section of protocol
 
 	class pair {
@@ -36,9 +37,9 @@ namespace protocol {
 		human& Bob;
 		unsigned size;
 		unsigned k;
-		mtrx::Matrix A;
-		mtrx::Matrix B;
-		mtrx::Matrix W;
+		Matrix A;
+		Matrix B;
+		Matrix W;
 	}; // public section of protocol
 
 }

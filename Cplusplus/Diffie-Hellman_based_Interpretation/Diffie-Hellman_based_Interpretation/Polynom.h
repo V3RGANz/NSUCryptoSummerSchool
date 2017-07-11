@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include "Matrix.h"
 
-using namespace std;
-
 namespace poly {
 	class Polynom
 	{
@@ -16,10 +14,6 @@ namespace poly {
 	public:
 		//Creates undefined polynom
 		Polynom();
-		//Creates polynom with following coefficients with degree coefficients.size() -1
-		Polynom(vector<int> coefficients);
-		//Creates polynom with all coefficients = coef of following degree
-		Polynom(int coef, unsigned degree);
 		//Creates random polynom of following degree
 		Polynom(unsigned degree);
 		~Polynom();

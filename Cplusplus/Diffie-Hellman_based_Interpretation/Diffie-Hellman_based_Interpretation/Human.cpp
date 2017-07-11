@@ -4,7 +4,6 @@ using namespace mtrx;
 using namespace poly;
 
 human::human(){}
-human::human(unsigned degree) {}
 human::~human(){}
 
 Matrix human::makePublicKey(Matrix A, Matrix B, Matrix W, unsigned k)
