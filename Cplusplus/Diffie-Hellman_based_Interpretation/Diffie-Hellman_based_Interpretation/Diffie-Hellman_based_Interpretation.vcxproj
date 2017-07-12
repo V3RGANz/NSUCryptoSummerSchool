@@ -150,7 +150,7 @@
     <ClCompile Include="Combinations.cpp" />
     <ClCompile Include="GrassmanExtendedMatrix.cpp" />
     <ClCompile Include="GrassmanMatrix.cpp" />
-    <ClCompile Include="Human.cpp" />
+    <ClCompile Include="User.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Polynom.cpp" />
@@ -158,7 +158,8 @@
   <ItemGroup>
     <ClInclude Include="Hack.h" />
     <ClInclude Include="Header.h" />
-    <ClInclude Include="Human.h" />
+    <ClInclude Include="InvalidKException.h" />
+    <ClInclude Include="User.h" />
     <ClInclude Include="incompatibleMatricesException.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Polynom.h" />

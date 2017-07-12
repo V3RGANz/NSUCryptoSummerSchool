@@ -1,6 +1,6 @@
 #include "Header.h"
 #include "Matrix.h"
-#include "UnsutableKException.h"
+#include "InvalidKException.h"
 #include <iostream>
 
 GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() {
@@ -8,7 +8,7 @@ GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() 
 	// source matrix shouldn't be less than k*k
 	if (k == 0  || k > M.getSize()) {
 		this->SetData({});
-		throw UnsutableKException();
+		throw InvalidKException();
 	}
 
 	this->M = M;

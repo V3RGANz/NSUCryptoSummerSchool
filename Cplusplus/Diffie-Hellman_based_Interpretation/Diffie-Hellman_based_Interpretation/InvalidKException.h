@@ -2,12 +2,12 @@
 
 #include<exception>
 
-class UnsutableKException : public std::exception
+class InvalidKException : public std::exception
 {
 
 public:
-	UnsutableKException() throw() { }
-	~UnsutableKException() throw() { }
+	InvalidKException() throw() { }
+	~InvalidKException() throw() { }
 
 	const char* what() const throw() {
 		return "K should be not bigger than matrix size and not equal to 0";

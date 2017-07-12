@@ -1,14 +1,14 @@
 #include "Header.h"
 #include "Matrix.h"
 #include "Polynom.h"
-#include "Human.h"
+#include "User.h"
 
 using namespace protocol;
 
-human::human(){}
-human::~human(){}
+user::user(){}
+user::~user(){}
 
-Matrix human::makePublicKey(Matrix A, Matrix B, Matrix W, unsigned k)
+Matrix user::makePublicKey(Matrix A, Matrix B, Matrix W, unsigned k)
 {
 	f = Polynom(A.getSize());
 	h = Polynom(A.getSize());
@@ -21,12 +21,12 @@ Matrix human::makePublicKey(Matrix A, Matrix B, Matrix W, unsigned k)
 	return left*W*right;
 }
 
-void human::makePrivateKey(Matrix conjugate)
+void user::makePrivateKey(Matrix conjugate)
 {
 	key = left*conjugate*right;
 }
 
-protocol::pair::pair(human & first, human & second) : Alice(first), Bob(second)
+protocol::pair::pair(user & first, user & second) : Alice(first), Bob(second)
 {
 	Alice = first;
 	Bob = second;
@@ -46,4 +46,4 @@ void protocol::pair::protocol(unsigned size, unsigned k)
 	Alice.makePrivateKey(Bob_open);
 }
 
-bool protocol::checkKeys(human h1, human h2) { return h1.key == h2.key; }
+bool protocol::checkKeys(user h1, user h2) { return h1.key == h2.key; }

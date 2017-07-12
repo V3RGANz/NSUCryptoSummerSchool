@@ -3,7 +3,7 @@
 
 #include "Matrix.h"
 #include "Polynom.h"
-#include "Human.h"
+#include "User.h"
 
 using namespace std;
 
@@ -38,8 +38,8 @@ int main(void) {
 		cout << endl << endl
 			<< "Protocol checking...\n";
 
-		protocol::human Alice;
-		protocol::human Bob;
+		protocol::user Alice;
+		protocol::user Bob;
 		protocol::pair keyExchange(Alice, Bob);
 		try {
 			keyExchange.protocol(5, k);

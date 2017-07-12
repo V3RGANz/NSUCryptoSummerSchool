@@ -12,7 +12,7 @@ namespace protocol {
 
 	class Polynom;
 	
-	class human;
+	class user;
 	
 	class pair;
 }
