@@ -22,16 +22,16 @@ int main(void) {
 
 		GrassmanMatrix B(A, 2);
 
-		B.PrintMatrix();
+		B.Print();
 	}
 	//Grassman check 2
 	{
 		Matrix X(5, -10, 10);
 		cout << "source matrix: " << endl;
-		X.PrintMatrix();
+		X.Print();
 		cout << "representation in Grassman Algebra (k = " << k << "): " << endl;
 		GrassmanMatrix Y(X, k);
-		Y.PrintMatrix();
+		Y.Print();
 	}
 	//Protocol check
 	{

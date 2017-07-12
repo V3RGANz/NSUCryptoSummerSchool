@@ -36,7 +36,7 @@ void AbstractMatrix::SetData(vector<vector<int>> newData) {
 	this->size = newData.size();
 }
 
-void AbstractMatrix::PrintMatrix() {
+void AbstractMatrix::Print() {
 	for (std::vector<int> line : data) {
 		for (int value : line)
 			std::cout << value << "\t";

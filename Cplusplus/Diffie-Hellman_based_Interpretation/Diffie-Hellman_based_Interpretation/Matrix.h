@@ -36,7 +36,7 @@ namespace protocol {
 		virtual bool operator ==(AbstractMatrix);
 		
 		//Prints all values in rectangular area
-		void PrintMatrix();
+		void Print();
 
 	protected:
 		void SetSize(unsigned size);
