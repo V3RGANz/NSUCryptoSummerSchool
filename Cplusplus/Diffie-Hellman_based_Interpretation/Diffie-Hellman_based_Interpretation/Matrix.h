@@ -28,7 +28,7 @@ namespace protocol {
 		operator Matrix (); // прямо говоря, это костыль
 
 		virtual AbstractMatrix operator +(AbstractMatrix);
-		virtual AbstractMatrix operator -(AbstractMatrix A);
+		virtual AbstractMatrix operator -(AbstractMatrix);
 		virtual AbstractMatrix operator *(AbstractMatrix);
 		virtual AbstractMatrix operator *(int);
 		virtual AbstractMatrix operator ^(unsigned);
@@ -57,14 +57,31 @@ namespace protocol {
 		Matrix(unsigned size, int minvalue, int maxvalue);
 		Matrix(Polynom p, Matrix A);
 		~Matrix();
-
 	}; //General matrix class
 
-	class GrassmanExtendedMatrix : public AbstractMatrix {
+	class GrassmanExtendedMatrix : public AbstractMatrix { // not complete yet
+	private:
+		unsigned line;
+		unsigned column;
+		unsigned M;
+		unsigned K;
+		unsigned repeatition;
+		Matrix A;
+		vector<unsigned> Index[2];	
+		bool LoopState;
+
+		void Loop(unsigned k) {}
+		//	unsigned i = Index[LoopState].back();
+		//	Index[LoopState].push_back(i);
+		//	for (; i < k; i++) {
+		//		
+		//	}
+		//}
 	public:
 		GrassmanExtendedMatrix();
+		GrassmanExtendedMatrix(Matrix a, unsigned k, unsigned m);
 		~GrassmanExtendedMatrix();
-	}; //Extended Grassman algebra matrix class
+	}; // Matrix in extended grassman algebra space 
 
 	class GrassmanMatrix : public GrassmanExtendedMatrix {
 

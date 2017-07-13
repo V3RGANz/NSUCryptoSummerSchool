@@ -32,7 +32,7 @@ namespace protocol {
 		user& Alice;
 		user& Bob;
 		unsigned size;
-		unsigned k;
+		unsigned K;
 		Matrix A;
 		Matrix B;
 		Matrix W;

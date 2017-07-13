@@ -36,12 +36,12 @@ protocol::pair::~pair() { }
 
 void protocol::pair::protocol(unsigned size, unsigned k)
 {
-	this->k = k;
+	K = k;
 	A = Matrix(size, minvalue, maxvalue);
 	B = Matrix(size, minvalue, maxvalue);
 	W = Matrix(C(size, k), minvalue, maxvalue);
-	Matrix Alice_open(Alice.makePublicKey(A, B, W, k));
-	Matrix Bob_open(Bob.makePublicKey(A, B, W, k));
+	Matrix Alice_open(Alice.makePublicKey(A, B, W, K));
+	Matrix Bob_open(Bob.makePublicKey(A, B, W, K));
 	Bob.makePrivateKey(Alice_open);
 	Alice.makePrivateKey(Bob_open);
 }

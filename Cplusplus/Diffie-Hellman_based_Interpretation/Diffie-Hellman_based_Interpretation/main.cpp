@@ -11,9 +11,9 @@ int minvalue = 100;
 int maxvalue = -100;
 
 int main(void) {
-	unsigned k = 3;
+	unsigned k = 2;
 	//Grassman check 1
-	{
+	/*{
 		Matrix A({
 			{5, -2, 0},
 			{1,  3, 2},
@@ -23,26 +23,25 @@ int main(void) {
 		GrassmanMatrix B(A, 2);
 
 		B.Print();
-	}
+	}*/
 	//Grassman check 2
-	{
+	/*{
 		Matrix X(5, -10, 10);
 		cout << "source matrix: " << endl;
 		X.Print();
 		cout << "representation in Grassman Algebra (k = " << k << "): " << endl;
 		GrassmanMatrix Y(X, k);
 		Y.Print();
-	}
+	}*/
 	//Protocol check
 	{
-		cout << endl << endl
-			<< "Protocol checking...\n";
+		cout << "Protocol checking...\n";
 
 		protocol::user Alice;
 		protocol::user Bob;
 		protocol::pair keyExchange(Alice, Bob);
 		try {
-			keyExchange.protocol(5, k);
+			keyExchange.protocol(8, k);
 		}
 		catch (const exception& ex) {
 			cout << ex.what() << endl;
