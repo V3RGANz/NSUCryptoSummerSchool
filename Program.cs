@@ -82,15 +82,12 @@ namespace TCPTest
                 {
                     sameYourPiece = true;
                     if (sameHisPiece)
-                        if (isServer)
-                            return Matrix.GetKey(yourP, hisP, W);
-                        else
-                            return Matrix.GetKey(hisP, yourP, W);
+                        CorrectFinish();
                 }
                 else if (buf[0] == (byte)PackageCode.HisPieceIsTheSame)
                 {
-                    sameYourPiece = true;
-                    if (sameHisPiece)
+                    sameHisPiece = true;
+                    if (sameYourPiece)
                         CorrectFinish();                     
                 }
                 else
