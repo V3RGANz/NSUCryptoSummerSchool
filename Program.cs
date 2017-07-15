@@ -240,69 +240,90 @@ namespace TCPTest
         List<IPAddress> ip = new List<IPAddress>();
         void Connect(IPEndPoint IPEP)//client
         {
-            if (connections.Count < maxconnections)
+            try
             {
-                TcpClient client;
-                lock (_lock)
+                if (connections.Count < maxconnections)
                 {
-                    client = new TcpClient(IPEP);
-                    client.Connect(IPEP);
-                }
-                IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                if (this.ip.Any(x => x.Equals(ip)))
-                {
-                    Console.WriteLine("You've successfully been connected to {0}\nPress SPACE to start key generation and anything else otherwise.\n", ((IPEndPoint)client.Client.RemoteEndPoint).Address);
-                    if (Console.ReadKey().Key == ConsoleKey.Spacebar)
+                    TcpClient client;
+                    lock (_lock)
                     {
-                        NetworkStream stream = client.GetStream();
-                        Connection con = new Connection(this, stream, false);
-                        connections.Add(con);
-                        con.Protocol();
-                        connections.Remove(con);
+                        client = new TcpClient(IPEP);
+                        client.Connect(IPEP);
                     }
-                }  
-                client.Close();
+                    IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                    if (this.ip.Any(x => x.Equals(ip)))
+                    {
+                        Console.WriteLine("You've successfully been connected to {0}\nPress SPACE to start key generation and anything else otherwise.\n", ((IPEndPoint)client.Client.RemoteEndPoint).Address);
+                        if (Console.ReadKey().Key == ConsoleKey.Spacebar)
+                        {
+                            NetworkStream stream = client.GetStream();
+                            Connection con = new Connection(this, stream, false);
+                            connections.Add(con);
+                            con.Protocol();
+                            connections.Remove(con);
+                        }
+                    }
+                    client.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
         void Accept(IPEndPoint IPEP)//server
         {
-            if (connections.Count < maxconnections)
+            try
             {
-                TcpClient client;
-                TcpListener server;
-                lock (_lock)
+                if (connections.Count < maxconnections)
                 {
-                    server = new TcpListener(IPEP);
-                    server.Start();
-                    client = server.AcceptTcpClient();
-                }
-                IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                if (this.ip.Any(x => x.Equals(ip)))
-                {
-                    Console.WriteLine("{0} is trying to connect to you.\nPress SPACE to start key generation and anything else otherwise.\n", ip);
-                    if (Console.ReadKey().Key == ConsoleKey.Spacebar)
+                    TcpClient client;
+                    TcpListener server;
+                    lock (_lock)
                     {
-                        NetworkStream stream = client.GetStream();
-                        server.Stop();
-                        Connection con = new Connection(this, stream, true);
-                        connections.Add(con);
-                        con.Protocol();
-                        connections.Remove(con);
+                        server = new TcpListener(IPEP);
+                        server.Start();
+                        client = server.AcceptTcpClient();
                     }
+                    IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                    if (this.ip.Any(x => x.Equals(ip)))
+                    {
+                        Console.WriteLine("{0} is trying to connect to you.\nPress SPACE to start key generation and anything else otherwise.\n", ip);
+                        if (Console.ReadKey().Key == ConsoleKey.Spacebar)
+                        {
+                            NetworkStream stream = client.GetStream();
+                            server.Stop();
+                            Connection con = new Connection(this, stream, true);
+                            connections.Add(con);
+                            con.Protocol();
+                            connections.Remove(con);
+                        }
+                    }
+                    client.Close();
                 }
-                client.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
         public void Start(IPEndPoint IPEP)
         {
-            while (true)
+            try
             {
-                if (connections.Count < maxconnections)
+                while (true)
                 {
-                    new Thread(x => Connect((IPEndPoint)x)).Start(IPEP);
-                    new Thread(x => Accept((IPEndPoint)x)).Start(IPEP);
+                    if (connections.Count < maxconnections)
+                    {
+                        new Thread(x => Connect((IPEndPoint)x)).Start(IPEP);
+                        new Thread(x => Accept((IPEndPoint)x)).Start(IPEP);
+                    }
+                    Thread.Sleep(1000);
                 }
-                Thread.Sleep(1000);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }
