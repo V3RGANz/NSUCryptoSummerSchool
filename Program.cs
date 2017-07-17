@@ -51,6 +51,9 @@ namespace TCPTest
             this.stream = stream;
             this.isServer = isServer;
         }
+        public Connection()
+        {
+        }
         public Matrix Protocol()
         {
             if (isServer)
@@ -237,21 +240,21 @@ namespace TCPTest
         object _lock = new object();
         const int maxconnections = 1;
         List<Connection> connections = new List<Connection>();//both as server and as client
-        List<IPAddress> ip = new List<IPAddress>();
-        void Connect(IPEndPoint IPEP)//client
+        List<IPAddress> ips = new List<IPAddress>();//bound to 'connections'
+        public void Connect(IPEndPoint IPEP)//client
         {
+            TcpClient client;
             try
             {
                 if (connections.Count < maxconnections)
                 {
-                    TcpClient client;
                     lock (_lock)
                     {
                         client = new TcpClient(IPEP);
                         client.Connect(IPEP);
                     }
                     IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                    if (this.ip.Any(x => x.Equals(ip)))
+                    if (!ips.Any(x => x.Equals(ip)))
                     {
                         Console.WriteLine("You've successfully been connected to {0}\nPress SPACE to start key generation and anything else otherwise.\n", ((IPEndPoint)client.Client.RemoteEndPoint).Address);
                         if (Console.ReadKey().Key == ConsoleKey.Spacebar)
@@ -259,8 +262,10 @@ namespace TCPTest
                             NetworkStream stream = client.GetStream();
                             Connection con = new Connection(this, stream, false);
                             connections.Add(con);
+                            ips.Add(ip);
                             con.Protocol();
                             connections.Remove(con);
+                            ips.Remove(ip);
                         }
                     }
                     client.Close();
@@ -271,7 +276,7 @@ namespace TCPTest
                 Console.WriteLine(e.Message);
             }
         }
-        void Accept(IPEndPoint IPEP)//server
+        public void Accept(IPEndPoint IPEP)//server
         {
             try
             {
@@ -286,7 +291,7 @@ namespace TCPTest
                         client = server.AcceptTcpClient();
                     }
                     IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                    if (this.ip.Any(x => x.Equals(ip)))
+                    if (!ips.Any(x => x.Equals(ip)))
                     {
                         Console.WriteLine("{0} is trying to connect to you.\nPress SPACE to start key generation and anything else otherwise.\n", ip);
                         if (Console.ReadKey().Key == ConsoleKey.Spacebar)
@@ -295,8 +300,10 @@ namespace TCPTest
                             server.Stop();
                             Connection con = new Connection(this, stream, true);
                             connections.Add(con);
+                            ips.Add(ip);
                             con.Protocol();
                             connections.Remove(con);
+                            ips.Remove(ip);
                         }
                     }
                     client.Close();
@@ -335,7 +342,7 @@ namespace TCPTest
             try
             {
                 IPEndPoint IPEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888);
-                new TCPModule().Start(IPEP);
+                new TCPModule().Accept(IPEP);
             }
             catch (Exception e)
             {
