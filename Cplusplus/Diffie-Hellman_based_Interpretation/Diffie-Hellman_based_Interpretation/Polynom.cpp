@@ -6,7 +6,7 @@ Polynom::Polynom(){}
 Polynom::Polynom(unsigned degree) {
 	coefficients = vector<int>(degree);
 	for (int& value : coefficients){
-		value = minvalue + rand() % (maxvalue - minvalue + 1);
+		value = rand() % modulo;
 	}
 	this->degree = degree;
 }

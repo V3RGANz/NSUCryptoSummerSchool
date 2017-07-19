@@ -24,7 +24,7 @@ namespace protocol {
 		vector<vector<int> > getData();
 
 		vector<int>& operator [](unsigned i); // Allows use M[i][j] syntax
-		
+
 		operator Matrix (); // прямо говоря, это костыль
 
 		virtual AbstractMatrix operator +(AbstractMatrix);
@@ -33,10 +33,11 @@ namespace protocol {
 		virtual AbstractMatrix operator *(int);
 		virtual AbstractMatrix operator ^(unsigned);
 		virtual AbstractMatrix operator -();
+		virtual AbstractMatrix operator %(int);
 		virtual bool operator ==(AbstractMatrix);
-		
+
 		//Prints all values in rectangular area
-		void Print();
+		void Print(ofstream&);
 
 	protected:
 		void SetSize(unsigned size);
@@ -54,36 +55,36 @@ namespace protocol {
 		//Create matrix filled by data Data
 		Matrix(vector<vector<int> > Data);
 		Matrix(unsigned size);
-		Matrix(unsigned size, int minvalue, int maxvalue);
+		Matrix(unsigned size, unsigned modulo);
 		Matrix(Polynom p, Matrix A);
 		~Matrix();
 	}; //General matrix class
 
-	class GrassmanExtendedMatrix : public AbstractMatrix { // not complete yet
-	private:
-		unsigned line;
-		unsigned column;
-		unsigned M;
-		unsigned K;
-		unsigned repeatition;
-		Matrix A;
-		vector<unsigned> Index[2];	
-		bool LoopState;
-
-		void Loop(unsigned k) {}
-		//	unsigned i = Index[LoopState].back();
-		//	Index[LoopState].push_back(i);
-		//	for (; i < k; i++) {
-		//		
-		//	}
-		//}
+	class GrassmanExtendedMatrix : public AbstractMatrix { // not complete yet (нормально причесать а то наследуется дохрена мусора)
 	public:
-		GrassmanExtendedMatrix();
-		GrassmanExtendedMatrix(Matrix a, unsigned k, unsigned m);
+		GrassmanExtendedMatrix(vector<vector<int>>);
 		~GrassmanExtendedMatrix();
+		void printsource(ofstream&);
+		void print(ofstream&);
+	private:
+		enum basisclassif { main, excess };
+		unsigned N = 3, M = 3, K = 3, level = 1, depth = 0, index = 0;
+		// current combination of index
+		vector<unsigned> c;
+		// permutation that will be dropped from combination
+		vector<unsigned> exss;
+		// all permutations
+		vector<vector<unsigned>> permutations;
+		// basis of extended matrix
+		vector<vector<vector<unsigned> > > basis;
+		// search all possible combinations for current N, M, K
+		void CombTraverse();
+		// all permutations of combination
+		void PermutationTraverse();
+		vector<vector<int>> source;
 	}; // Matrix in extended grassman algebra space 
 
-	class GrassmanMatrix : public GrassmanExtendedMatrix {
+	class GrassmanMatrix : public AbstractMatrix {
 
 	public:
 		// Creates matrix, that represent matrix M in k-grade Grassman space

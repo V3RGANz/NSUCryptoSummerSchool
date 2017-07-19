@@ -1,8 +1,7 @@
 #ifndef MAIN_HEADER
 #define MAIN_HEADER
 
-extern int minvalue;
-extern int maxvalue;
+extern int modulo;
 
 namespace protocol {
 	class AbstractMatrix;

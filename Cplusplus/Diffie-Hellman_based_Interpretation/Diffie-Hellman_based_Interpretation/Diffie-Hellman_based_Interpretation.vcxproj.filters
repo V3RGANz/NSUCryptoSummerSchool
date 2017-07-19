@@ -75,4 +75,15 @@
       <Filter>Заголовочные файлы\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="second.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="second_source.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="result.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

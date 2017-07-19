@@ -3,7 +3,7 @@
 #include "InvalidKException.h"
 #include <iostream>
 
-GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : GrassmanExtendedMatrix() {
+GrassmanMatrix::GrassmanMatrix(Matrix M, unsigned k) : AbstractMatrix() {
 
 	// source matrix shouldn't be less than k*k
 	if (k == 0  || k > M.getSize()) {
@@ -48,7 +48,7 @@ void GrassmanMatrix::Loop(unsigned n) {
 			LoopState = 1;
 		}
 		else
-			(*this)[line][column] = Minor(K);
+			(*this)[line][column] = (modulo + Minor(K) % modulo) % modulo;
 		if (LoopState) {
 			line++;
 			column = 0;

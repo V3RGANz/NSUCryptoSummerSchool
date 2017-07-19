@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "Header.h"
 
 #include "Matrix.h"
@@ -7,11 +8,12 @@
 
 using namespace std;
 
-int minvalue = 100;
-int maxvalue = -100;
+int modulo = 101;
+
+// модульную арифметику я бы конечно еще пофиксил
 
 int main(void) {
-	unsigned k = 2;
+	unsigned k = 3;
 	//Grassman check 1
 	/*{
 		Matrix A({
@@ -41,7 +43,7 @@ int main(void) {
 		protocol::user Bob;
 		protocol::pair keyExchange(Alice, Bob);
 		try {
-			keyExchange.protocol(8, k);
+			keyExchange.protocol(5, k);
 		}
 		catch (const exception& ex) {
 			cout << ex.what() << endl;
@@ -52,6 +54,33 @@ int main(void) {
 		else
 			cout << "Bob and Alice have different keys ;(" << endl;
 	}
+
+	//Grassman extended check
+
+	//GrassmanExtendedMatrix A({
+	//	{ 41, 85, 72 },
+	//	{ 38, 80, 69 },
+	//	{ 65, 68, 96 }
+	//});
+
+	//GrassmanExtendedMatrix B({
+	//	{ 59, 69, 4  },
+	//	{ 29, 64, 8  },
+	//	{ 10, 10, 50 }
+	//});
+
+	//ofstream fout("second_source.txt");
+	//B.printsource(fout);
+	//fout.close();
+
+	//ofstream f2out("second.txt");
+	//B.print(f2out);
+	//f2out.close();
+
+	//ofstream f3out("result.txt");
+	//Matrix result = (A*B) % 101;
+	//result.Print(f3out);
+	//f3out.close();
 
 	return 0;
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "incompatibleMatricesException.h"
 #include "Header.h"
 #include "Matrix.h"
@@ -25,9 +26,10 @@ vector<vector<int>> AbstractMatrix::getData() { return data;}
 void AbstractMatrix::SetSize(unsigned size)
 {
 	data.resize(size);
-	for (vector<int> line : data) {
+	for (vector<int>& line : data) {
 		line.resize(size);
 	}
+	this->size = size;
 }
 
 void AbstractMatrix::SetData(vector<vector<int>> newData) {
@@ -36,11 +38,11 @@ void AbstractMatrix::SetData(vector<vector<int>> newData) {
 	this->size = newData.size();
 }
 
-void AbstractMatrix::Print() {
+void AbstractMatrix::Print(ofstream& out) {
 	for (std::vector<int> line : data) {
 		for (int value : line)
-			std::cout << value << "\t";
-		std::cout << std::endl;
+			out << value << "\t";
+		out << std::endl << std::endl;
 	}
 }
 
@@ -56,6 +58,7 @@ AbstractMatrix AbstractMatrix::operator -() {
 	result.SetData(data);
 	return result;
 }
+
 
 bool AbstractMatrix::operator==(AbstractMatrix A)
 {
@@ -78,7 +81,7 @@ AbstractMatrix AbstractMatrix::operator +(AbstractMatrix A){
 	
 	for (unsigned i = 0; i < size; i++){
 		for (unsigned j = 0; j < size; j++)
-			newdata[i][j] = (*this)[i][j] + A[i][j];
+			newdata[i][j] = (modulo + ((*this)[i][j] + A[i][j]) % modulo) % modulo;
 	}
 	AbstractMatrix result;
 	result.SetData(newdata);
@@ -94,7 +97,7 @@ AbstractMatrix AbstractMatrix::operator -(AbstractMatrix A) {
 
 	for (unsigned i = 0; i < size; i++) {
 		for (unsigned j = 0; j < size; j++)
-			newdata[i][j] = (*this)[i][j] - A[i][j];
+			newdata[i][j] = (modulo + ((*this)[i][j] - A[i][j])%modulo)%modulo;
 	}
 	AbstractMatrix result;
 	result.SetData(newdata);
@@ -111,7 +114,7 @@ AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) {
 	for (unsigned i = 0; i < size; i++)
 		for (unsigned j = 0; j < size; j++)
 			for (unsigned k = 0; k < size; k++)
-				newdata[i][j] += (*this)[i][k] * A[k][j];
+				newdata[i][j] = (modulo + (newdata[i][j] + (*this)[i][k] * A[k][j])%modulo)%modulo;
 	AbstractMatrix result;
 	result.SetData(newdata);
 	return result;
@@ -122,7 +125,7 @@ AbstractMatrix AbstractMatrix::operator*(int coef)
 	vector<vector<int> > newdata = data;
 	for (vector<int>& line : newdata)
 		for (int& value : line)
-			value *= coef;
+			value = (modulo + coef*value% modulo) % modulo;
 	AbstractMatrix result;
 	result.SetData(newdata);
 	return result;
@@ -134,4 +137,14 @@ AbstractMatrix AbstractMatrix::operator^(unsigned degree)
 	for (unsigned i = 0; i < degree; i++)
 		ret = ret*(*this);
 	return ret;
+}
+
+AbstractMatrix AbstractMatrix::operator%(int mod) {
+	vector<vector<int> > newdata = data;
+	for (vector<int>& line : newdata)
+		for (int& value : line)
+			value %= mod;
+	AbstractMatrix result;
+	result.SetData(newdata);
+	return result;
 }

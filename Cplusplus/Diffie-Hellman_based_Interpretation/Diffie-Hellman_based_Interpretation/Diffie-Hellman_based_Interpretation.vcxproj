@@ -164,6 +164,11 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Polynom.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="result.txt" />
+    <Text Include="second.txt" />
+    <Text Include="second_source.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
