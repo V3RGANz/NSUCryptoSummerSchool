@@ -10,10 +10,10 @@ using namespace std;
 
 int modulo = 101;
 
-// модульную арифметику я бы конечно еще пофиксил
+// Г¬Г®Г¤ГіГ«ГјГ­ГіГѕ Г Г°ГЁГґГ¬ГҐГІГЁГЄГі Гї ГЎГ» ГЄГ®Г­ГҐГ·Г­Г® ГҐГ№ГҐ ГЇГ®ГґГЁГЄГ±ГЁГ«
 
 int main(void) {
-	unsigned k = 3;
+	unsigned k = 4;
 	//Grassman check 1
 	/*{
 		Matrix A({
@@ -35,33 +35,47 @@ int main(void) {
 		GrassmanMatrix Y(X, k);
 		Y.Print();
 	}*/
+		
 	//Protocol check
-	{
-		cout << "Protocol checking...\n";
+	// {
+	// 	clock_t begin  = clock();
+	// 	cout << "Protocol checking...\n";
 
-		protocol::user Alice;
-		protocol::user Bob;
-		protocol::pair keyExchange(Alice, Bob);
-		try {
-			keyExchange.protocol(5, k);
-		}
-		catch (const exception& ex) {
-			cout << ex.what() << endl;
-		}
+	// 	protocol::user Alice;
+	// 	protocol::user Bob;
+	// 	protocol::pair keyExchange(Alice, Bob);
+	// 	try {
+	// 		keyExchange.protocol(8, k);
+	// 	}
+	// 	catch (const exception& ex) {
+	// 		cout << ex.what() << endl;
+	// 	}
+	// 	clock_t end = clock();
+		
+	// 	if (checkKeys(Alice, Bob))
+	// 		cout << "Bob and Alice have the same key!" << endl;
+	// 	else
+	// 		cout << "Bob and Alice have different keys ;(" << endl;
+	// 	cout << "computing took " << (end - begin)/CLOCKS_PER_SEC << " seconds" << endl;
+	// }
 
-		if (checkKeys(Alice, Bob))
-			cout << "Bob and Alice have the same key!" << endl;
-		else
-			cout << "Bob and Alice have different keys ;(" << endl;
-	}
 
 	//Grassman extended check
 
-	//GrassmanExtendedMatrix A({
-	//	{ 41, 85, 72 },
-	//	{ 38, 80, 69 },
-	//	{ 65, 68, 96 }
-	//});
+	GrassmanExtendedMatrix A({
+		{ 41, 85, 72 },
+		{ 38, 80, 69 },
+		{ 65, 68, 96 }
+	});
+
+	ofstream fout("source.txt");
+	A.printsource(fout);
+	fout.close();
+
+	ofstream f2out("new.txt");
+	A.print(f2out);
+	f2out.close();
+
 
 	//GrassmanExtendedMatrix B({
 	//	{ 59, 69, 4  },
