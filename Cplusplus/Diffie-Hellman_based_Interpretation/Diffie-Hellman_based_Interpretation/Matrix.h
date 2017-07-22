@@ -66,7 +66,7 @@ namespace protocol {
 		~GrassmanExtendedMatrix();
 		void printsource(ofstream&);
 		void print(ofstream&);
-	private:
+	private: 
 		enum basisclassif { main, excess };
 		unsigned N = 3, M = 3, K = 3, level = 1, depth = 0, index = 0;
 		// current combination of index
@@ -74,7 +74,7 @@ namespace protocol {
 		// permutation that will be dropped from combination
 		vector<unsigned> exss;
 		// all permutations
-		vector<vector<unsigned>> permutations;
+		vector<vector<unsigned> > permutations;
 		// basis of extended matrix
 		vector<vector<vector<unsigned> > > basis;
 		// search all possible combinations for current N, M, K
@@ -98,11 +98,11 @@ namespace protocol {
 		vector<unsigned> Index[2]; // Lines and Columns index combinations
 		Matrix M;
 		bool LoopState = true;
-		//	search of all combination for columns or lines 
-		//	passing through n nested loops, then call Minor for this
-		//	combination
+		// search of all combination for columns or lines 
+		// passing through n nested loops, then call Minor for this
+		// combination
 		void Loop(unsigned n);
-		//j-th minor, whose lines and columns are defined by LineIndex and ColumnIndex
+		// j-th minor, whose lines and columns are defined by LineIndex and ColumnIndex
 		int Minor(unsigned j);
 	}; // Exterior algebra matrix
 }
