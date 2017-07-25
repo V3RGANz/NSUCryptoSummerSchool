@@ -57,10 +57,13 @@ namespace protocol {
 		Matrix(unsigned size);
 		Matrix(unsigned size, unsigned modulo);
 		Matrix(Polynom p, Matrix A);
+		Matrix(ifstream*);
+		void WriteToStream(ofstream*);
 		~Matrix();
 	}; //General matrix class
 
 	class GrassmanExtendedMatrix : public AbstractMatrix { // not complete yet (нормально причесать а то наследуется дохрена мусора)
+	// На данный момент только 3x3
 	public:
 		GrassmanExtendedMatrix(vector<vector<int>>);
 		~GrassmanExtendedMatrix();

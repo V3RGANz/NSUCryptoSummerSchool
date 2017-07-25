@@ -71,6 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="AbstractMatrix.cpp" />
     <ClCompile Include="Combinations.cpp" />
+    <ClCompile Include="export.cpp" />
     <ClCompile Include="GrassmanExtendedMatrix.cpp" />
     <ClCompile Include="GrassmanMatrix.cpp" />
     <ClCompile Include="User.cpp" />

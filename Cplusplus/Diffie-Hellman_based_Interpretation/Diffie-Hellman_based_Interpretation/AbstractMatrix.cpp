@@ -114,7 +114,7 @@ AbstractMatrix AbstractMatrix::operator *(AbstractMatrix A) {
 	for (unsigned i = 0; i < size; i++)
 		for (unsigned j = 0; j < size; j++)
 			for (unsigned k = 0; k < size; k++)
-				newdata[i][j] = (modulo + (newdata[i][j] + (*this)[i][k] * A[k][j])%modulo)%modulo;
+				newdata[i][j] = (modulo + (newdata[i][j] + (*this)[i][k] * A[k][j]) % modulo) % modulo;
 	AbstractMatrix result;
 	result.SetData(newdata);
 	return result;

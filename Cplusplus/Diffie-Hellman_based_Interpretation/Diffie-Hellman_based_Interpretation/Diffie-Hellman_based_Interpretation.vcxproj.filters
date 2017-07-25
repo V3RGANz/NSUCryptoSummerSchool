@@ -51,6 +51,9 @@
     <ClCompile Include="User.cpp">
       <Filter>Файлы исходного кода\Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="export.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">
