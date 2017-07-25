@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Diagnostics;
+
 namespace TCPTest
 {
     class Connection//for each connection
@@ -33,7 +35,7 @@ namespace TCPTest
                 if (!samePublicData &&
                     (buf[0] == (byte)PackageCode.CreatePublicData || buf[0] == (byte)PackageCode.PublicDataIsNotTheSame))
                 {
-                    CreatePublicData(buf);
+                    CreatePublicData(buf, 1);
                     RequestComparePublicData(buf);
                 }
                 else if (buf[0] == (byte)PackageCode.RequestComparePublicData)
@@ -67,24 +69,23 @@ namespace TCPTest
         }
         void CreatePublicData()//server
         {
-            if (isServer)
-            {
                 byte[] buf = PublicDataToByteArray();
                 stream.Write(buf, 0, buf.Length);
-            }
         }
         byte[] PublicDataToByteArray()//server
         {
             //get matrices with the help of c++ project
             byte[] buf = new byte[packageSize];
+            //Process.Start("Diffie-Hellman_based_Interpretation.exe", "s");
+            //Process.Start("", "");
             Matrix.Server_GenerateSource();
-            using (FileStream f = new FileStream("public.bin", FileMode.Open))
+            using (FileStream f = new FileStream("source.bin", FileMode.Open))
             {
                 f.Read(buf, 0, packageSize);
             }
-            FileInfo fi = new FileInfo("public.bin");
+            FileInfo fi = new FileInfo("source.bin");
             fi.Delete();
-                CreatePublicData(buf);
+                CreatePublicData(buf, 0);
             return PublicDataToByteArray2();
         }
         byte[] PublicDataToByteArray2()//both
@@ -105,9 +106,9 @@ namespace TCPTest
             Buffer.BlockCopy(M.data, 0, buf, offset, sizeof(int) * M.data.Length);
             offset += M.data.Length * sizeof(int);
         }
-        void CreatePublicData(byte[] buf)//client
+        void CreatePublicData(byte[] buf, int _offset)//client
         {
-            int offset = 1;
+            int offset = _offset;
             A = ByteArrayToMatrix(buf, ref offset);
             B = ByteArrayToMatrix(buf, ref offset);
             W = ByteArrayToMatrix(buf, ref offset);

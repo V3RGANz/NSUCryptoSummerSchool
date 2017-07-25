@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
+
 namespace TCPTest
 {
     enum PackageCode
@@ -15,12 +16,14 @@ namespace TCPTest
 
     class Matrix
     {
+        
         [DllImport("Diffie-Hellman_based_Interpretation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public extern static void Server_GenerateSource();
+        internal extern static void Server_GenerateSource();
         [DllImport("Diffie-Hellman_based_Interpretation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public extern static void MakePublic();
+        internal extern static void MakePublic();
         [DllImport("Diffie-Hellman_based_Interpretation.dll", CallingConvention = CallingConvention.Cdecl)]
-        public extern static void MakePrivate();
+        internal extern static void MakePrivate();
+        
         public int[,] data { get; protected set; }
         public int size { get; protected set; }//is excessive (the same goes for 'protected' modifier), but remains according to the c++ code.
         public Matrix(int[,] data, int size)
@@ -123,7 +126,7 @@ namespace TCPTest
     {
         static void Main(string[] args)
         {
-            new TCPModule().Connect("172.16.15.134", 8888);
+            new TCPModule().Accept(8888);
         }
     }
 }
