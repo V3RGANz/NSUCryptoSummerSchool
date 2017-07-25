@@ -1,0 +1,6 @@
+C:\Users\user\Desktop\proger777\c#\TCPTest\bin\Debug\TCPTest.exe.config
+C:\Users\user\Desktop\proger777\c#\TCPTest\bin\Debug\TCPTest.exe
+C:\Users\user\Desktop\proger777\c#\TCPTest\bin\Debug\TCPTest.pdb
+C:\Users\user\Desktop\proger777\c#\TCPTest\obj\Debug\TCPTest.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\proger777\c#\TCPTest\obj\Debug\TCPTest.exe
+C:\Users\user\Desktop\proger777\c#\TCPTest\obj\Debug\TCPTest.pdb
