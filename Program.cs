@@ -41,7 +41,7 @@ namespace TCPTest
         public int M { get; private set; }
         public int K { get; private set; }
         bool isServer;
-        bool samePublicData = false, sameYourPiece = false;
+        bool samePublicData = false, sameYourPiece = false, sameHisPiece = false;
         const int packageSize = 1024;//implying it will always be enough
         public NetworkStream stream;
         internal TCPModule module;
@@ -56,11 +56,11 @@ namespace TCPTest
         }
         public Matrix Protocol()
         {
+            byte[] buf = new byte[packageSize];
             if (isServer)
                 CreatePublicData();
             while (true)
             {
-                byte[] buf = new byte[packageSize];
                 stream.Read(buf, 0, packageSize);
                 if (!samePublicData &&
                     (buf[0] == (byte)PackageCode.CreatePublicData || buf[0] == (byte)PackageCode.PublicDataIsNotTheSame))
@@ -85,11 +85,15 @@ namespace TCPTest
                 else if (buf[0] == (byte)PackageCode.RequestCompareHisPiece)
                 {
                     CompareYourPieceCallback(CompareYourPiece(buf));
+                    if (samePublicData && sameHisPiece && sameYourPiece)
+                        return CorrectFinish();
                 }
                 else if (buf[0] == (byte)PackageCode.YourPieceIsTheSame)
                 {
+                       sameHisPiece = true;
                     if (samePublicData && sameYourPiece)
-                        CorrectFinish();
+                        return CorrectFinish();
+                    SendYourPiece();
                 }
             }
         }
@@ -164,19 +168,22 @@ namespace TCPTest
         {
             byte[] buf2 = PublicDataToByteArray2();
             buf2[0] = (byte)PackageCode.RequestComparePublicData;
-            return (buf.SequenceEqual(buf2));
+            for (int i = 0; i < buf2.Length; ++i)
+                if (buf[i] != buf2[i])
+                    return false;
+            return true;
         }
         void ComparePublicDataCallback(bool b)//server
         {
             if (b)
             {
                 samePublicData = true;
-                stream.Write(new byte[] { (byte)PackageCode.YourPieceIsTheSame }, 0, 1);
+                stream.Write(new byte[] { (byte)PackageCode.PublicDataIsTheSame }, 0, 1);
             }
             else
             {
-                byte[] buf = PublicDataToByteArray();
-                buf[0] = (byte)PackageCode.YourPieceIsNotTheSame;
+                byte[] buf = PublicDataToByteArray2();
+                buf[0] = (byte)PackageCode.PublicDataIsNotTheSame;
                 stream.Write(buf, 0, buf.Length);
             }
         }
@@ -209,19 +216,22 @@ namespace TCPTest
         {
             byte[] buf2 = SendYourPiece2();
             buf2[0] = (byte)PackageCode.RequestCompareHisPiece;
-            return (buf.SequenceEqual(buf2));
+            for (int i = 0; i < buf2.Length; ++i)
+                if (buf[i] != buf2[i])
+                    return false;
+            return true;
         }
         void CompareYourPieceCallback(bool b)
         {
             if (b)
             {
                 sameYourPiece = true;
-                stream.Write(new byte[] { (byte)PackageCode.PublicDataIsTheSame }, 0, 1);
+                stream.Write(new byte[] { (byte)PackageCode.YourPieceIsTheSame }, 0, 1);
             }
             else
             {
-                byte[] buf = PublicDataToByteArray();
-                buf[0] = (byte)PackageCode.PublicDataIsNotTheSame;
+                byte[] buf = SendYourPiece2();
+                buf[0] = (byte)PackageCode.YourPieceIsNotTheSame;
                 stream.Write(buf, 0, buf.Length);
             }
         }
@@ -241,96 +251,73 @@ namespace TCPTest
         const int maxconnections = 1;
         List<Connection> connections = new List<Connection>();//both as server and as client
         List<IPAddress> ips = new List<IPAddress>();//bound to 'connections'
-        public void Connect(IPEndPoint IPEP)//client
+        public void Accept(int port)//server 
         {
+            //try
+            //{
+            if (connections.Count < maxconnections)
+            {
+                TcpClient client;
+                TcpListener server;
+                lock (_lock)
+                {
+                    server = new TcpListener(IPAddress.Any, 8888);
+                    server.Start();
+                    client = server.AcceptTcpClient();
+                }
+                IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                if (!ips.Any(x => x.Equals(ip)))
+                {
+                    Console.WriteLine("Press SPACE to start key generation and anything else otherwise.\n");
+                    if (Console.ReadKey().Key == ConsoleKey.Spacebar)
+                    {
+                        NetworkStream stream = client.GetStream();
+                        server.Stop();
+                        Connection con = new Connection(this, stream, true);
+                        connections.Add(con);
+                        ips.Add(ip);
+                        con.Protocol();
+                        connections.Remove(con);
+                        ips.Remove(ip);
+                    }
+                }
+                client.Close();
+            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+        }
+        public void Connect(string hostname, int port)//client 
+        {
+            //try 
+            //{ 
             TcpClient client;
-            try
+            if (connections.Count < maxconnections)
             {
-                if (connections.Count < maxconnections)
+                lock (_lock)
                 {
-                    lock (_lock)
-                    {
-                        client = new TcpClient(IPEP);
-                        client.Connect(IPEP);
-                    }
-                    IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                    if (!ips.Any(x => x.Equals(ip)))
-                    {
-                        Console.WriteLine("You've successfully been connected to {0}\nPress SPACE to start key generation and anything else otherwise.\n", ((IPEndPoint)client.Client.RemoteEndPoint).Address);
-                        if (Console.ReadKey().Key == ConsoleKey.Spacebar)
-                        {
-                            NetworkStream stream = client.GetStream();
-                            Connection con = new Connection(this, stream, false);
-                            connections.Add(con);
-                            ips.Add(ip);
-                            con.Protocol();
-                            connections.Remove(con);
-                            ips.Remove(ip);
-                        }
-                    }
-                    client.Close();
+
+                    client = new TcpClient();
+                    client.Connect(hostname, port);
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-        public void Accept(IPEndPoint IPEP)//server
-        {
-            try
-            {
-                if (connections.Count < maxconnections)
+                IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                if (!ips.Any(x => x.Equals(ip)))
                 {
-                    TcpClient client;
-                    TcpListener server;
-                    lock (_lock)
+                    Console.WriteLine("You've successfully been connected\nPress SPACE to start key generation and anything else otherwise.\n");
+                    if (Console.ReadKey().Key == ConsoleKey.Spacebar)
                     {
-                        server = new TcpListener(IPEP);
-                        server.Start();
-                        client = server.AcceptTcpClient();
+                        NetworkStream stream = client.GetStream();
+                        Connection con = new Connection(this, stream, false);
+                        connections.Add(con);
+                        ips.Add(ip);
+                        con.Protocol();
+                        connections.Remove(con);
+                        ips.Remove(ip);
                     }
-                    IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                    if (!ips.Any(x => x.Equals(ip)))
-                    {
-                        Console.WriteLine("{0} is trying to connect to you.\nPress SPACE to start key generation and anything else otherwise.\n", ip);
-                        if (Console.ReadKey().Key == ConsoleKey.Spacebar)
-                        {
-                            NetworkStream stream = client.GetStream();
-                            server.Stop();
-                            Connection con = new Connection(this, stream, true);
-                            connections.Add(con);
-                            ips.Add(ip);
-                            con.Protocol();
-                            connections.Remove(con);
-                            ips.Remove(ip);
-                        }
-                    }
-                    client.Close();
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-        public void Start(IPEndPoint IPEP)
-        {
-            try
-            {
-                while (true)
-                {
-                    if (connections.Count < maxconnections)
-                    {
-                        new Thread(x => Connect((IPEndPoint)x)).Start(IPEP);
-                        new Thread(x => Accept((IPEndPoint)x)).Start(IPEP);
-                    }
-                    Thread.Sleep(1000);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                client.Close();
             }
         }
     }
@@ -339,15 +326,14 @@ namespace TCPTest
     {
         static void Main(string[] args)
         {
-            try
-            {
-                IPEndPoint IPEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888);
-                new TCPModule().Accept(IPEP);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            //try
+            //{
+            new TCPModule().Connect("172.16.15.134", 8888);
+            //}
+            //catch (Exception e)
+            //{
+            //Console.WriteLine(e.Message);
+            //}
         }
     }
 }
