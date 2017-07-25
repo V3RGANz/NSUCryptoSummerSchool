@@ -7,7 +7,7 @@ namespace TCPTest
 {
     class Connection//for each connection
     {
-        Matrix A, B, W, hisP, yourP;//F stand for other user's encrypted matrix (aka hisPiece)
+        Matrix A, B, W, hisP, yourP;//stand for other user's encrypted matrix (aka hisPiece)
         public int M { get; private set; }
         public int K { get; private set; }
         bool isServer;
@@ -45,7 +45,12 @@ namespace TCPTest
                 else if (buf[0] == (byte)PackageCode.PublicDataIsTheSame)
                 {
                     samePublicData = true;
-                    SendYourPiece();
+                    using (FileStream f = new FileStream("source.bin", FileMode.OpenOrCreate))
+                    {
+                        byte[] _buf = PublicDataToByteArray2();
+                        f.Write(buf, 1, _buf.Length - 1);
+                    }
+                        SendYourPiece();
                 }
                 else if (buf[0] == (byte)PackageCode.SendYourPiece)
                 {
@@ -69,8 +74,8 @@ namespace TCPTest
         }
         void CreatePublicData()//server
         {
-                byte[] buf = PublicDataToByteArray();
-                stream.Write(buf, 0, buf.Length);
+            byte[] buf = PublicDataToByteArray();
+            stream.Write(buf, 0, buf.Length);
         }
         byte[] PublicDataToByteArray()//server
         {
@@ -83,9 +88,7 @@ namespace TCPTest
             {
                 f.Read(buf, 0, packageSize);
             }
-            FileInfo fi = new FileInfo("source.bin");
-            fi.Delete();
-                CreatePublicData(buf, 0);
+            CreatePublicData(buf, 0);
             return PublicDataToByteArray2();
         }
         byte[] PublicDataToByteArray2()//both
@@ -154,16 +157,15 @@ namespace TCPTest
         }
         void SendYourPiece()//both here and later
         {
-            byte[] buf = SendYourPiece2();
             byte[] _buf = new byte[packageSize];
             Matrix.MakePublic();
-            using (FileStream f = new FileStream("privatedata.bin", FileMode.Open))
+            using (FileStream f = new FileStream("public.bin", FileMode.Open))
             {
                 f.Read(_buf, 0, packageSize);
             }
             int offset = 0;
             yourP = ByteArrayToMatrix(_buf, ref offset);
-            Buffer.BlockCopy(yourP.data, 0, buf, 2, sizeof(int) * yourP.data.Length);
+            byte[] buf = SendYourPiece2();
             stream.Write(buf, 0, buf.Length);
         }
         byte[] SendYourPiece2()
@@ -172,6 +174,7 @@ namespace TCPTest
             byte[] buf = new byte[size];
             buf[0] = (byte)PackageCode.SendYourPiece;
             buf[1] = (byte)W.size;
+            Buffer.BlockCopy(yourP.data, 0, buf, 2, sizeof(int) * yourP.data.Length);
             return buf;
         }
         void ReceiveHisPiece(byte[] buf)
@@ -210,20 +213,23 @@ namespace TCPTest
         Matrix CorrectFinish()
         {
             stream.Dispose();
-            byte[] buf = new byte[packageSize];
+            
+            int size = sizeof(int) * hisP.data.Length + 1;
+            byte[] buf = new byte[size];
             buf[0] = (byte)hisP.size;
-            Buffer.BlockCopy(hisP.data, 0, buf, 0, sizeof(int) * hisP.data.Length);
+            Buffer.BlockCopy(hisP.data, 0, buf, 1, size - 1);
             using (FileStream f = new FileStream("public.bin", FileMode.OpenOrCreate))
             {
-                f.Write(buf, 0, hisP.data.Length + 1);
+                f.Write(buf, 0, size);
             }
             Matrix.MakePrivate();
             using (FileStream f = new FileStream("privatekey.bin", FileMode.Open))
             {
-                f.Read(buf, 0, packageSize);
+                f.Read(buf, 0, size);
             }
             int offset = 0;
             return ByteArrayToMatrix(buf, ref offset);
         }
+
     }
 }
