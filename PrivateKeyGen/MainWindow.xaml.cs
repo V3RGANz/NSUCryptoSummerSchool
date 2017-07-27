@@ -24,6 +24,7 @@ namespace PrivateKeyGen
     /// </summary>
     public partial class MainWindow : Window
     {
+        UniformGrid[] M;
         bool server;
         bool running = false;
         //CancellationTokenSource cts = new CancellationTokenSource();
@@ -42,6 +43,7 @@ namespace PrivateKeyGen
         IPAddress ip;
         public MainWindow()
         {
+            M = new UniformGrid[]{ A, B, W, Key};
             InitializeComponent();
         }
 
@@ -135,18 +137,16 @@ namespace PrivateKeyGen
             {
                 int[][,] m;
                 TcpClient client;
-                client = server ? await Task.Run(() => TCPModule.Accept(port, n, k, mod))
+                client = server ? await Task.Run(() => TCPModule.Accept(port))
                     : await Task.Run(() => TCPModule.Connect(ip, port));
                 NetworkStream stream = client.GetStream();
-                Connection con = new Connection(stream, server);
+                Connection con = new Connection(stream);
                 ConnectedPanel.Visibility = Visibility.Visible;
                 ConnectedLabel.Content = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
                 m = server ? con.Protocol(n, k, mod) : con.Protocol();
                 KGPanel.Visibility = Visibility.Visible;
-                WriteMatrix(A, m[0]);
-                WriteMatrix(B, m[1]);
-                WriteMatrix(W, m[2]);
-                WriteMatrix(Key, m[3]);
+                foreach (var v in M.Zip(m, Tuple.Create))
+                    WriteMatrix(v.Item1, v.Item2);
             }
             catch (Exception ex)
             {

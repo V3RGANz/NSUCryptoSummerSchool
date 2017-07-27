@@ -10,16 +10,13 @@ namespace PrivateKeyGen
         Matrix A, B, W, hisP, yourP;//stand for other user's encrypted matrix (aka hisPiece)
         internal int Mod { get; private set; }
         internal int K { get; private set; }
-        bool isServer;
         bool samePublicData = false, sameYourPiece = false, sameHisPiece = false;
         const int packageSize = 1024;//implying it will always be enough
         public NetworkStream stream;
-        //internal TCPModule module;
-        internal Connection(/*TCPModule module, */NetworkStream stream, bool isServer)
+        internal Connection(NetworkStream stream)
         {
             //this.module = module;
             this.stream = stream;
-            this.isServer = isServer;
         }
         internal int[][,] Protocol(int n, int k, int mod)
         {

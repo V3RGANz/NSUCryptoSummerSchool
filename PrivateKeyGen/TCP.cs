@@ -32,14 +32,10 @@ namespace PrivateKeyGen
         }
     }
 
-    public class TCPModule
+    class TCPModule
     {
-        internal static int n, k, mod;
-        internal static TcpClient Accept(int port, int n, int k, int mod)//server 
+        internal static TcpClient Accept(int port)//server 
         {
-            TCPModule.n = n;
-            TCPModule.k = k;
-            TCPModule.mod = mod;
             TcpClient client;
             TcpListener server;
             server = new TcpListener(IPAddress.Any, 8888);
@@ -53,6 +49,7 @@ namespace PrivateKeyGen
             TcpClient client;
             client = new TcpClient();
             client.Connect(ip, port);
+            //if(!client.BeginConnect(ip, port, null, null).AsyncWaitHandle.WaitOne(15000))
             return client;
         }
     }
