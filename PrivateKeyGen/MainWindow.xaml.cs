@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,13 +19,14 @@ using System.Windows.Shapes;
 
 namespace PrivateKeyGen
 {
-    /// <summary> 
-    /// Логика взаимодействия для MainWindow.xaml 
-    /// </summary> 
+    /// <summary>
+    /// Логика взаимодействия для MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
         bool server;
         bool running = false;
+        //CancellationTokenSource cts = new CancellationTokenSource();
         bool Running
         {
             get { return running; }
@@ -32,11 +34,12 @@ namespace PrivateKeyGen
             {
                 running = value;
                 LaunchButton.Content = running ? "Стоп" : "Запуск";
+                //cts.Cancel();
             }
         }
         int result;
         int port, n, k, mod;
-        string ip;
+        IPAddress ip;
         public MainWindow()
         {
             InitializeComponent();
@@ -75,16 +78,10 @@ namespace PrivateKeyGen
                 else
                 {
                     IsIntTBCorrect(ClientPortTB, ref port, port => (port >= 1024 && port <= 65535));
-                    try
-                    {
-                        IPAddress.Parse(ClientIPTB.Text);
-                        ip = ClientIPTB.Text;
+                    if (IPAddress.TryParse(ClientIPTB.Text, out ip))
                         ++result;
-                    }
-                    catch
-                    {
+                    else
                         ClientIPTB.Foreground = Brushes.Red;
-                    }
                     if (result == 2)
                         Launch(false);
                 }
@@ -104,16 +101,16 @@ namespace PrivateKeyGen
             return true;
         }
 
-        /* 
-        int C(int n, int k) 
-        { 
-        int ret = 1; 
-        if (k > n » 1) 
-        k = n - k; 
-        for (int i = 0; i < k; ++i) 
-        ret = ret * (n - k) / (k + 1); 
-        return ret; 
-        } 
+        /*
+        int C(int n, int k)
+        {
+            int ret = 1;
+            if (k > n >> 1)
+                k = n - k;
+            for (int i = 0; i < k; ++i)
+                ret = ret * (n - k) / (k + 1);
+            return ret;
+        }
         */
 
         void IsIntTBCorrect(TextBox tb, ref int t, Predicate<int> P)
@@ -137,10 +134,14 @@ namespace PrivateKeyGen
             try
             {
                 int[][,] m;
-                if (server)
-                    m = await Task.Run(() => TCPModule.Accept(port, n, k, mod));
-                else
-                    m = await Task.Run(() => TCPModule.Connect(ip, port));
+                TcpClient client;
+                client = server ? await Task.Run(() => TCPModule.Accept(port, n, k, mod))
+                    : await Task.Run(() => TCPModule.Connect(ip, port));
+                NetworkStream stream = client.GetStream();
+                Connection con = new Connection(stream, server);
+                ConnectedPanel.Visibility = Visibility.Visible;
+                ConnectedLabel.Content = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                m = server ? con.Protocol(n, k, mod) : con.Protocol();
                 KGPanel.Visibility = Visibility.Visible;
                 WriteMatrix(A, m[0]);
                 WriteMatrix(B, m[1]);

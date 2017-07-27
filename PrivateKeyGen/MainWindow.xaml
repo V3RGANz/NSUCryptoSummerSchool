@@ -33,45 +33,33 @@
                         <TextBox Name="ClientPortTB" GotFocus="TBGotFocus" VerticalAlignment="Center">8888</TextBox>
                     </StackPanel>
                 </StackPanel>
-                <Button Name="LaunchButton" Grid.Column="1" Padding="5" Margin="10 0 0 0" Click="Button_Click" IsEnabled="False">Запуск</Button>
+                <Button Name="LaunchButton" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="10 0 0 0" Padding="5 6 5 6" Click="Button_Click" IsEnabled="False">Запуск</Button>
             </Grid>
             <StackPanel Name="KGPanel" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal" Visibility="Hidden">
+                <StackPanel Name="ConnectedPanel"  Orientation="Horizontal" Visibility="Collapsed">
                     <Label>Установлено подключение к</Label>
-                    <Label Foreground="Red">127.0.0.1</Label>
+                    <Label Foreground="Red" Name="ConnectedLabel"></Label>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Visibility="Hidden">
+                <!--<StackPanel Orientation="Horizontal" Visibility="Collapsed">
                     <Label>Публичные данные для генерации ключа:</Label>
                     <Label FontWeight="DemiBold" Name="NandK">N = 5, K = 3</Label>
-                </StackPanel>
+                </StackPanel>-->
                 <StackPanel Orientation="Horizontal">
                     <Label>A =</Label>
-                    <ScrollViewer>
-                        <UniformGrid Name="A"/>
-                    </ScrollViewer>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                    <UniformGrid ScrollViewer.VerticalScrollBarVisibility="Auto" Name="A"/>
                     <Label>B =</Label>
-                    <ScrollViewer>
-                        <UniformGrid Name="B"/>
-                    </ScrollViewer>
+                    <UniformGrid ScrollViewer.VerticalScrollBarVisibility="Auto" Name="B"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>W =</Label>
-                    <ScrollViewer>
-                        <UniformGrid Name="W"/>
-                    </ScrollViewer>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                    <UniformGrid ScrollViewer.VerticalScrollBarVisibility="Auto" Name="W"/>
                     <Label>Сгенерированный ключ =</Label>
-                    <ScrollViewer>
-                        <UniformGrid Name="Key"/>
-                    </ScrollViewer>
+                    <UniformGrid ScrollViewer.VerticalScrollBarVisibility="Auto" Name="Key"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Name="ErrorPanel" Visibility="Collapsed">
                 <Label>Сообщение об ошибке:</Label>
-                <TextBlock Name="ErrorTB"></TextBlock>
+                <TextBlock ScrollViewer.VerticalScrollBarVisibility="Auto" Name="ErrorTB"></TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>

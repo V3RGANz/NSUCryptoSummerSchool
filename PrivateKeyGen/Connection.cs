@@ -5,35 +5,45 @@ using System.Diagnostics;
 
 namespace PrivateKeyGen
 {
-    class Connection//for each connection 
+    class Connection//for each connection
     {
-        Matrix A, B, W, hisP, yourP;//stand for other user's encrypted matrix (aka hisPiece) 
+        Matrix A, B, W, hisP, yourP;//stand for other user's encrypted matrix (aka hisPiece)
         internal int Mod { get; private set; }
         internal int K { get; private set; }
         bool isServer;
         bool samePublicData = false, sameYourPiece = false, sameHisPiece = false;
-        const int packageSize = 1024;//implying it will always be enough 
+        const int packageSize = 1024;//implying it will always be enough
         public NetworkStream stream;
-        //internal TCPModule module; 
+        //internal TCPModule module;
         internal Connection(/*TCPModule module, */NetworkStream stream, bool isServer)
         {
-            //this.module = module; 
+            //this.module = module;
             this.stream = stream;
             this.isServer = isServer;
         }
-        internal Connection()
+        internal int[][,] Protocol(int n, int k, int mod)
         {
+            byte[] buf = new byte[packageSize];
+            Matrix.GeneratePublicData(n, k, mod);
+            using (FileStream f = new FileStream("publicdata.bin", FileMode.Open))
+            {
+                f.Read(buf, 0, packageSize);
+            }
+            CreatePublicData(buf, 0);
+            byte[] buf2 = new byte[buf.Length + 1];
+            Buffer.BlockCopy(buf, 0, buf2, 1, buf.Length);
+            buf2[0] = (byte)PackageCode.CreatePublicData;
+            stream.Write(buf2, 0, buf2.Length);
+            return Protocol();
         }
         internal int[][,] Protocol()
         {
-            byte[] buf = new byte[packageSize];
-            if (isServer)
-                CreatePublicData();
+            byte[] buf = new byte[packageSize];   
             while (true)
             {
                 stream.Read(buf, 0, packageSize);
                 if (!samePublicData &&
-                (buf[0] == (byte)PackageCode.CreatePublicData || buf[0] == (byte)PackageCode.PublicDataIsNotTheSame))
+                    (buf[0] == (byte)PackageCode.CreatePublicData || buf[0] == (byte)PackageCode.PublicDataIsNotTheSame))
                 {
                     CreatePublicData(buf, 1);
                     RequestComparePublicData(buf);
@@ -47,7 +57,7 @@ namespace PrivateKeyGen
                     samePublicData = true;
                     using (FileStream f = new FileStream("publicdata.bin", FileMode.OpenOrCreate))
                     {
-                        byte[] _buf = PublicDataToByteArray2();
+                        byte[] _buf = PublicDataToByteArray();
                         f.Write(buf, 1, _buf.Length - 1);
                     }
                     SendYourPiece();
@@ -72,30 +82,7 @@ namespace PrivateKeyGen
                 }
             }
         }
-        void CreatePublicData()//server 
-        {
-            byte[] buf = PublicDataToByteArray();
-            stream.Write(buf, 0, buf.Length);
-        }
-        byte[] PublicDataToByteArray()//server 
-        {
-            //get matrices with the help of c++ project 
-            byte[] buf = new byte[packageSize];
-            //Process.Start("Diffie-Hellman_based_Interpretation.exe", "s"); 
-            //Process.Start("", ""); 
-            Matrix.GeneratePublicData(TCPModule.n, TCPModule.k, TCPModule.mod);
-            using (FileStream f = new FileStream("publicdata.bin", FileMode.Open))
-            {
-                f.Read(buf, 0, packageSize);
-            }
-            CreatePublicData(buf, 0);
-            byte[] _buf = new byte[buf.Length + 1];
-            Buffer.BlockCopy(buf, 0, _buf, 1, buf.Length);
-            _buf[0] = (byte)PackageCode.CreatePublicData;
-
-            return _buf;
-        }
-        byte[] PublicDataToByteArray2()//both 
+        byte[] PublicDataToByteArray()//both
         {
             int size = 9 + sizeof(int) * (A.data.Length + B.data.Length + W.data.Length), offset = 1;
             byte[] buf = new byte[size];
@@ -103,18 +90,18 @@ namespace PrivateKeyGen
             buf[offset++] = (byte)K;
             buf[offset] = (byte)Mod;
             offset += sizeof(int);
-            PublicDataToByteArray3(A, buf, ref offset);
-            PublicDataToByteArray3(B, buf, ref offset);
-            PublicDataToByteArray3(W, buf, ref offset);
+            PublicDataToByteArray2(A, buf, ref offset);
+            PublicDataToByteArray2(B, buf, ref offset);
+            PublicDataToByteArray2(W, buf, ref offset);
             return buf;
         }
-        void PublicDataToByteArray3(Matrix M, byte[] buf, ref int offset)//both 
+        void PublicDataToByteArray2(Matrix M, byte[] buf, ref int offset)//both
         {
             buf[offset++] = (byte)M.size;
             Buffer.BlockCopy(M.data, 0, buf, offset, sizeof(int) * M.data.Length);
             offset += M.data.Length * sizeof(int);
         }
-        void CreatePublicData(byte[] buf, int _offset)//client 
+        void CreatePublicData(byte[] buf, int _offset)//client
         {
             int offset = _offset;
             K = buf[offset++];
@@ -124,7 +111,7 @@ namespace PrivateKeyGen
             B = ByteArrayToMatrix(buf, ref offset);
             W = ByteArrayToMatrix(buf, ref offset);
         }
-        Matrix ByteArrayToMatrix(byte[] buf, ref int offset)//client 
+        Matrix ByteArrayToMatrix(byte[] buf, ref int offset)//client
         {
             int size = buf[offset++];
             int[,] data = new int[size, size];
@@ -133,22 +120,21 @@ namespace PrivateKeyGen
             offset += count;
             return new Matrix(data, size);
         }
-        void
-        RequestComparePublicData(byte[] buf)//client 
+        void RequestComparePublicData(byte[] buf)//client 
         {
             buf[0] = (byte)PackageCode.RequestComparePublicData;
             stream.Write(buf, 0, buf.Length);
         }
-        bool ComparePublicData(byte[] buf)//server 
+        bool ComparePublicData(byte[] buf)//server
         {
-            byte[] buf2 = PublicDataToByteArray2();
+            byte[] buf2 = PublicDataToByteArray();
             buf2[0] = (byte)PackageCode.RequestComparePublicData;
             for (int i = 0; i < buf2.Length; ++i)
                 if (buf[i] != buf2[i])
                     return false;
             return true;
         }
-        void ComparePublicDataCallback(bool b)//server 
+        void ComparePublicDataCallback(bool b)//server
         {
             if (b)
             {
@@ -157,12 +143,12 @@ namespace PrivateKeyGen
             }
             else
             {
-                byte[] buf = PublicDataToByteArray2();
+                byte[] buf = PublicDataToByteArray();
                 buf[0] = (byte)PackageCode.PublicDataIsNotTheSame;
                 stream.Write(buf, 0, buf.Length);
             }
         }
-        void SendYourPiece()//both here and later 
+        void SendYourPiece()//both here and later
         {
             byte[] _buf = new byte[packageSize];
             Matrix.MakePublic();
@@ -177,7 +163,7 @@ namespace PrivateKeyGen
         }
         byte[] SendYourPiece2()
         {
-            int size = 2 + sizeof(int) * W.data.Length;//let it be W 
+            int size = 2 + sizeof(int) * W.data.Length;//let it be W
             byte[] buf = new byte[size];
             buf[0] = (byte)PackageCode.SendYourPiece;
             buf[1] = (byte)W.size;
