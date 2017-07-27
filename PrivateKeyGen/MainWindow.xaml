@@ -28,15 +28,15 @@
                     <RadioButton Name="ClientRB" Grid.Row="1" Checked="ClientRB_Checked">Поиск подключений</RadioButton>
                     <StackPanel Name="ClientPanel" Orientation="Horizontal" Visibility="Collapsed">
                         <Label VerticalAlignment="Center">IP:</Label>
-                        <TextBox Name="ClientIPTB" GotFocus="TBGotFocus" Margin="5" VerticalAlignment="Center">127.0.0.1</TextBox>
+                        <TextBox Name="ClientIPTB" GotFocus="TBGotFocus" Margin="5" VerticalAlignment="Center">172.16.12.145</TextBox>
                         <Label>Порт:</Label>
                         <TextBox Name="ClientPortTB" GotFocus="TBGotFocus" VerticalAlignment="Center">8888</TextBox>
                     </StackPanel>
                 </StackPanel>
-                <Button Name="LaunchButton" Grid.Column="1" Padding="5" Margin="10 0 0 10" Click="Button_Click" IsEnabled="False">Запуск</Button>
+                <Button Name="LaunchButton" Grid.Column="1" Padding="5" Margin="10 0 0 0" Click="Button_Click" IsEnabled="False">Запуск</Button>
             </Grid>
             <StackPanel Name="KGPanel" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Visibility="Hidden">
                     <Label>Установлено подключение к</Label>
                     <Label Foreground="Red">127.0.0.1</Label>
                 </StackPanel>
@@ -46,34 +46,33 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>A =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="A"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>B =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="B"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>W =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="W"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>Сгенерированный ключ =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="Key"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
             </StackPanel>
             <StackPanel Name="ErrorPanel" Visibility="Collapsed">
                 <Label>Сообщение об ошибке:</Label>
                 <TextBlock Name="ErrorTB"></TextBlock>
             </StackPanel>
-            
         </StackPanel>
     </Grid>
 </Window>

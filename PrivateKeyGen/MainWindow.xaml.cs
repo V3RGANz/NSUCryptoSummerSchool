@@ -18,17 +18,28 @@ using System.Windows.Shapes;
 
 namespace PrivateKeyGen
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+    /// <summary> 
+    /// Логика взаимодействия для MainWindow.xaml 
+    /// </summary> 
     public partial class MainWindow : Window
     {
         bool server;
+        bool running = false;
+        bool Running
+        {
+            get { return running; }
+            set
+            {
+                running = value;
+                LaunchButton.Content = running ? "Стоп" : "Запуск";
+            }
+        }
         int result;
         int port, n, k, mod;
+        string ip;
         public MainWindow()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         private void ServerRB_Checked(object sender, RoutedEventArgs e)
@@ -49,31 +60,37 @@ namespace PrivateKeyGen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            result = 0;
-            if (server)
+            if (!Running)
             {
-                IsIntTBCorrect(ServerPortTB, ref port, port => (port >= 1024 && port <= 65535));
-                IsIntTBCorrect(ServerNTB, ref n, N => (N >= 3 && N <= 15));
-                IsIntTBCorrect(ServerKTB, ref k, K => (K >= 1 && (result & 2) != 0 && K < n));
-                IsIntTBCorrect(ServerModTB, ref mod, IsPrime);
-                if (result == 15)
-                    Launch(true);    
+                result = 0;
+                if (server)
+                {
+                    IsIntTBCorrect(ServerPortTB, ref port, port => (port >= 1024 && port <= 65535));
+                    IsIntTBCorrect(ServerNTB, ref n, N => (N >= 3 && N <= 15));
+                    IsIntTBCorrect(ServerKTB, ref k, K => (K >= 1 && (result & 2) != 0 && K < n));
+                    IsIntTBCorrect(ServerModTB, ref mod, IsPrime);
+                    if (result == 15)
+                        Launch(true);
+                }
+                else
+                {
+                    IsIntTBCorrect(ClientPortTB, ref port, port => (port >= 1024 && port <= 65535));
+                    try
+                    {
+                        IPAddress.Parse(ClientIPTB.Text);
+                        ip = ClientIPTB.Text;
+                        ++result;
+                    }
+                    catch
+                    {
+                        ClientIPTB.Foreground = Brushes.Red;
+                    }
+                    if (result == 2)
+                        Launch(false);
+                }
             }
             else
-            {
-                IsIntTBCorrect(ClientPortTB, ref port, port => (port >= 1024 && port <= 65535));
-                try
-                {
-                    IPAddress.Parse(ClientIPTB.Text);
-                    ++result;
-                }
-                catch
-                {
-                    ClientIPTB.Foreground = Brushes.Red;
-                }
-                if (result == 2)
-                    Launch(false);
-            }
+                Running = false;
         }
 
         bool IsPrime(int x)
@@ -87,16 +104,16 @@ namespace PrivateKeyGen
             return true;
         }
 
-        /*
-        int C(int n, int k)
-        {
-            int ret = 1;
-            if (k > n >> 1)
-                k = n - k;
-            for (int i = 0; i < k; ++i)
-                ret = ret * (n - k) / (k + 1);
-            return ret;
-        }
+        /* 
+        int C(int n, int k) 
+        { 
+        int ret = 1; 
+        if (k > n » 1) 
+        k = n - k; 
+        for (int i = 0; i < k; ++i) 
+        ret = ret * (n - k) / (k + 1); 
+        return ret; 
+        } 
         */
 
         void IsIntTBCorrect(TextBox tb, ref int t, Predicate<int> P)
@@ -113,18 +130,18 @@ namespace PrivateKeyGen
             (sender as TextBox).Foreground = Brushes.Black;
         }
 
-        void Launch(bool server)
+        async void Launch(bool server)
         {
-            LaunchButton.IsEnabled = false;
+            Running = true;
             ErrorPanel.Visibility = Visibility.Collapsed;
-            KGPanel.Visibility = Visibility.Visible;
             try
             {
                 int[][,] m;
                 if (server)
-                    m = TCPModule.Accept(port);
+                    m = await Task.Run(() => TCPModule.Accept(port, n, k, mod));
                 else
-                    m = TCPModule.Connect(ClientIPTB.Text, port);
+                    m = await Task.Run(() => TCPModule.Connect(ip, port));
+                KGPanel.Visibility = Visibility.Visible;
                 WriteMatrix(A, m[0]);
                 WriteMatrix(B, m[1]);
                 WriteMatrix(W, m[2]);
@@ -137,7 +154,7 @@ namespace PrivateKeyGen
             }
             finally
             {
-                LaunchButton.IsEnabled = true;
+                Running = false;
             }
         }
 
@@ -148,7 +165,7 @@ namespace PrivateKeyGen
             M.Rows = data.GetLength(1);
             for (int i = 0; i < M.Rows; ++i)
                 for (int j = 0; j < M.Rows; ++j)
-                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString() });
+                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString(), Margin = new Thickness(2) });
         }
     }
 }

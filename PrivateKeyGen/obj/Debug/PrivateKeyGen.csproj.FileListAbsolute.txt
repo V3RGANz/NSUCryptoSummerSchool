@@ -15,3 +15,14 @@ C:\Users\user\Desktop\proger777\c#\PrivateKeyGen\obj\Debug\PrivateKeyGen.pdb
 C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\bin\Debug\PrivateKeyGen.exe.config
 C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.exe
 C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.pdb
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\bin\Debug\PrivateKeyGen.exe
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\bin\Debug\PrivateKeyGen.pdb
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.csprojResolveAssemblyReference.cache
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\MainWindow.g.cs
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\App.g.cs
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen_MarkupCompile.cache
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen_MarkupCompile.lref
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\MainWindow.baml
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.g.resources
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.Properties.Resources.resources
+C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.csproj.GenerateResource.Cache

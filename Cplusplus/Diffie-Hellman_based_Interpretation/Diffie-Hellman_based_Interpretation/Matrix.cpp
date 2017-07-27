@@ -5,8 +5,7 @@
 
 Matrix::Matrix() : AbstractMatrix() {}
 Matrix::Matrix(unsigned size) : AbstractMatrix(size) { }
-Matrix::Matrix(unsigned size, unsigned modulo) { 
-	srand(time(NULL));
+Matrix::Matrix(unsigned size, unsigned modulo) {
 	// можно было бы сделать короче если было бы доступно поле data
 	vector<vector<int> > newData(size, vector<int>(size));
 	for (vector<int>& line : newData)

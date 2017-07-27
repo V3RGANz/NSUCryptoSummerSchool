@@ -1,20 +1,2 @@
-﻿  Polynom.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\polynom.cpp(8): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Matrix.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(9): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(25): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(26): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(35): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\matrix.cpp(36): warning C4018: <: несоответствие типов со знаком и без знака
-  main.cpp
-  User.cpp
-  GrassmanMatrix.cpp
-  GrassmanExtendedMatrix.cpp
-  export.cpp
-c:\users\дедов\documents\github\nsucryptosummerschool\cplusplus\diffie-hellman_based_interpretation\diffie-hellman_based_interpretation\export.cpp(23): warning C4838: преобразование из "unsigned int" в "char" требует сужающего преобразования
-  Combinations.cpp
-  AbstractMatrix.cpp
-  Создание кода...
-  LINK : не найден или не выполнена сборка C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\Cplusplus\Diffie-Hellman_based_Interpretation\Debug\Diffie-Hellman_based_Interpretation.dll при последней инкрементной компоновке; выполняется полная компоновка
-     Создается библиотека C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\Cplusplus\Diffie-Hellman_based_Interpretation\Debug\Diffie-Hellman_based_Interpretation.lib и объект C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\Cplusplus\Diffie-Hellman_based_Interpretation\Debug\Diffie-Hellman_based_Interpretation.exp
+﻿  export.cpp
   Diffie-Hellman_based_Interpretation.vcxproj -> C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\Cplusplus\Diffie-Hellman_based_Interpretation\Debug\Diffie-Hellman_based_Interpretation.dll

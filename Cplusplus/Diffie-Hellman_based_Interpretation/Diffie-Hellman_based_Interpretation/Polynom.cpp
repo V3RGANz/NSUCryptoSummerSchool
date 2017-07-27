@@ -5,7 +5,6 @@ Polynom::Polynom(){}
 
 Polynom::Polynom(unsigned degree) {
 	coefficients = vector<int>(degree);
-	srand(time(NULL));
 	for (int& value : coefficients){
 		value = rand() % modulo;
 	}
