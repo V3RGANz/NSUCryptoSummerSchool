@@ -15,22 +15,29 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel HorizontalAlignment="Left">
                     <RadioButton Name="ServerRB" HorizontalAlignment="Left" Checked="ServerRB_Checked">Принятие подключений</RadioButton>
-                    <StackPanel Name="ServerPanel" Orientation="Horizontal" Visibility="Collapsed">
-                        <Label>Порт:</Label>
-                        <TextBox Name="ServerPortTB" GotFocus="TBGotFocus" MaxLength="4" ToolTip="Порт должен находиться в диапазоне от 1024 до 65535." VerticalAlignment="Center">8888</TextBox>
-                        <Label>N =</Label>
-                        <TextBox Name="ServerNTB" GotFocus="TBGotFocus" MaxLength="2" VerticalAlignment="Center" ToolTip="Размер матриц публичного доступа, необходимых для генерации ключа.">5</TextBox>
-                        <Label>K =</Label>
-                        <TextBox Name="ServerKTB" GotFocus="TBGotFocus" MaxLength="2" VerticalAlignment="Center" ToolTip="Степень, влияющая в т.ч. и на размер генерируемого ключа.">3</TextBox>
-                        <Label>Модуль =</Label>
-                        <TextBox Name="ServerModTB" GotFocus="TBGotFocus" MaxLength="9" VerticalAlignment="Center" ToolTip="Простой модуль, в поле остатков по нему будут находиться элементы матриц.">101</TextBox>
+                    <StackPanel  Name="ServerPanel" Visibility="Collapsed">
+                        <StackPanel Orientation="Horizontal">
+                            <Label ToolTip="M = 2">Внешняя алгебра</Label>
+                            <Slider Name="MSlider" Width="50" Maximum="1" SmallChange="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" ValueChanged="MSlider_ValueChanged"></Slider>
+                            <Label ToolTip="M = K = 3">Внутренняя алгебра</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>Порт:</Label>
+                            <TextBox Name="ServerPortTB" GotFocus="TBGotFocus" MaxLength="4" ToolTip="Порт должен находиться в диапазоне от 1024 до 65535." VerticalAlignment="Center">8888</TextBox>
+                            <Label>N =</Label>
+                            <TextBox Name="ServerNTB" GotFocus="TBGotFocus" MaxLength="2" VerticalAlignment="Center" ToolTip="Размер матриц публичного доступа, необходимых для генерации ключа.">5</TextBox>
+                            <Label>K =</Label>
+                            <TextBox Name="ServerKTB" GotFocus="TBGotFocus" MaxLength="2" VerticalAlignment="Center" ToolTip="Степень, влияющая в т.ч. и на размер генерируемого ключа.">3</TextBox>
+                            <Label>Модуль =</Label>
+                            <TextBox Name="ServerModTB" GotFocus="TBGotFocus" MaxLength="9" VerticalAlignment="Center" ToolTip="Простой модуль, в поле остатков по нему будут находиться элементы матриц.">101</TextBox>
+                        </StackPanel>
                     </StackPanel>
                     <RadioButton Name="ClientRB" Grid.Row="1" Checked="ClientRB_Checked">Поиск подключений</RadioButton>
                     <StackPanel Name="ClientPanel" Orientation="Horizontal" Visibility="Collapsed">
                         <Label VerticalAlignment="Center">IP:</Label>
-                        <TextBox Name="ClientIPTB" GotFocus="TBGotFocus" Margin="5" VerticalAlignment="Center">172.16.12.145</TextBox>
+                        <TextBox Name="ClientIPTB" GotFocus="TBGotFocus" Margin="5" VerticalAlignment="Center" ToolTip="IP для подключения к другому устройству в локальной сети.">172.16.12.145</TextBox>
                         <Label>Порт:</Label>
-                        <TextBox Name="ClientPortTB" GotFocus="TBGotFocus" VerticalAlignment="Center">8888</TextBox>
+                        <TextBox Name="ClientPortTB" GotFocus="TBGotFocus" VerticalAlignment="Center" ToolTip="Порт должен находиться в диапазоне от 1024 до 65535.">8888</TextBox>
                     </StackPanel>
                 </StackPanel>
                 <Button Name="LaunchButton" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="10 0 0 0" Padding="5 6 5 6" Click="Button_Click" IsEnabled="False">Запуск</Button>

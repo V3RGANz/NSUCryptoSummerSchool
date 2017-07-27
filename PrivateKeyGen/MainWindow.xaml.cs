@@ -25,8 +25,10 @@ namespace PrivateKeyGen
     public partial class MainWindow : Window
     {
         UniformGrid[] M;
+        TcpClient client;
         bool server;
         bool running = false;
+        string _k;
         //CancellationTokenSource cts = new CancellationTokenSource();
         bool Running
         {
@@ -124,6 +126,23 @@ namespace PrivateKeyGen
                 tb.Foreground = Brushes.Red;
         }
 
+        private void MSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (MSlider.Value == 1)
+            {
+                _k = ServerKTB.Text;
+                ServerKTB.Text = "3";
+                ServerKTB.IsEnabled = false;
+            }
+            else
+            {
+                ServerKTB.IsEnabled = true;
+                ServerKTB.Text = _k;
+            }
+                
+            
+        }
+
         private void TBGotFocus(object sender, RoutedEventArgs e)
         {
             (sender as TextBox).Foreground = Brushes.Black;
@@ -136,13 +155,14 @@ namespace PrivateKeyGen
             try
             {
                 int[][,] m;
-                TcpClient client;
                 client = server ? await Task.Run(() => TCPModule.Accept(port))
                     : await Task.Run(() => TCPModule.Connect(ip, port));
                 NetworkStream stream = client.GetStream();
                 Connection con = new Connection(stream);
                 ConnectedPanel.Visibility = Visibility.Visible;
                 ConnectedLabel.Content = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                if (MSlider.Value == 1)
+                    k = 0;
                 m = server ? con.Protocol(n, k, mod) : con.Protocol();
                 KGPanel.Visibility = Visibility.Visible;
                 foreach (var v in M.Zip(m, Tuple.Create))
@@ -156,6 +176,7 @@ namespace PrivateKeyGen
             finally
             {
                 Running = false;
+                client?.Close();
             }
         }
 

@@ -34,19 +34,19 @@ namespace PrivateKeyGen
 
     class TCPModule
     {
+        static TcpListener server;
+        static TcpClient client;
         internal static TcpClient Accept(int port)//server 
         {
-            TcpClient client;
-            TcpListener server;
             server = new TcpListener(IPAddress.Any, 8888);
             server.Start();
             client = server.AcceptTcpClient();
+            //server.BeginAcceptTcpClient(null, null);
             server.Stop();
             return client;
         }
         internal static TcpClient Connect(IPAddress ip, int port)//client  
         {
-            TcpClient client;
             client = new TcpClient();
             client.Connect(ip, port);
             //if(!client.BeginConnect(ip, port, null, null).AsyncWaitHandle.WaitOne(15000))
