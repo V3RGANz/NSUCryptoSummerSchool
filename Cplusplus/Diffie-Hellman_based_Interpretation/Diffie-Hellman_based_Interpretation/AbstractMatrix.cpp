@@ -46,6 +46,14 @@ void AbstractMatrix::Print(ofstream& out) {
 	}
 }
 
+void protocol::AbstractMatrix::Print() {
+	for (std::vector<int> line : data) {
+		for (int value : line)
+			cout << value << "\t";
+		cout << std::endl << std::endl;
+	}
+}
+
 vector<int>& AbstractMatrix::operator [](unsigned i) { return data[i]; }
 AbstractMatrix::operator Matrix() { return Matrix(data); }
 

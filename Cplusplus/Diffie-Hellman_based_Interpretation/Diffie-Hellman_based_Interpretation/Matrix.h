@@ -38,6 +38,7 @@ namespace protocol {
 
 		//Prints all values in rectangular area
 		void Print(ofstream&);
+		void Print();
 
 	protected:
 		void SetSize(unsigned size);
