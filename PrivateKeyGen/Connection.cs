@@ -233,7 +233,7 @@ namespace PrivateKeyGen
             new FileInfo("source.bin").Delete();
             new FileInfo("privatekey.bin").Delete();
             ret[0] = A.data;
-            ret[1] = B.data;
+            ret[1] =  B.data;
             ret[2] = W.data;
             int offset = 0;
             ret[3] = ByteArrayToMatrix(buf, ref offset).data;

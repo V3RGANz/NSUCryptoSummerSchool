@@ -24,11 +24,12 @@ namespace PrivateKeyGen
     public partial class MainWindow : Window
     {
         bool server;
+        bool running = false;
         int result;
         int port, n, k, mod;
         public MainWindow()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         private void ServerRB_Checked(object sender, RoutedEventArgs e)
@@ -36,7 +37,8 @@ namespace PrivateKeyGen
             server = true;
             ServerPanel.Visibility = Visibility.Visible;
             ClientPanel.Visibility = Visibility.Collapsed;
-            LaunchButton.IsEnabled = true;
+            if (!running)
+                LaunchButton.IsEnabled = true;
         }
 
         private void ClientRB_Checked(object sender, RoutedEventArgs e)
@@ -44,7 +46,8 @@ namespace PrivateKeyGen
             server = false;
             ServerPanel.Visibility = Visibility.Collapsed;
             ClientPanel.Visibility = Visibility.Visible;
-            LaunchButton.IsEnabled = true;
+            if (!running)
+                LaunchButton.IsEnabled = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -57,7 +60,7 @@ namespace PrivateKeyGen
                 IsIntTBCorrect(ServerKTB, ref k, K => (K >= 1 && (result & 2) != 0 && K < n));
                 IsIntTBCorrect(ServerModTB, ref mod, IsPrime);
                 if (result == 15)
-                    Launch(true);    
+                    Launch(true);
             }
             else
             {
@@ -113,18 +116,19 @@ namespace PrivateKeyGen
             (sender as TextBox).Foreground = Brushes.Black;
         }
 
-        void Launch(bool server)
+        async void Launch(bool server)
         {
+            running = true;
             LaunchButton.IsEnabled = false;
             ErrorPanel.Visibility = Visibility.Collapsed;
             KGPanel.Visibility = Visibility.Visible;
             try
             {
-                int[][,] m;
+                int[][,] m; 
                 if (server)
-                    m = TCPModule.Accept(port);
+                    m = await Task.Run(() => TCPModule.Accept(port));
                 else
-                    m = TCPModule.Connect(ClientIPTB.Text, port);
+                    m = await Task.Run(() => TCPModule.Connect(ClientIPTB.Text, port));
                 WriteMatrix(A, m[0]);
                 WriteMatrix(B, m[1]);
                 WriteMatrix(W, m[2]);
@@ -137,6 +141,7 @@ namespace PrivateKeyGen
             }
             finally
             {
+                running = false;
                 LaunchButton.IsEnabled = true;
             }
         }
@@ -148,7 +153,7 @@ namespace PrivateKeyGen
             M.Rows = data.GetLength(1);
             for (int i = 0; i < M.Rows; ++i)
                 for (int j = 0; j < M.Rows; ++j)
-                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString() });
+                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString(), Margin = new Thickness(2) });
         }
     }
 }

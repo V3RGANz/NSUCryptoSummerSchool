@@ -46,34 +46,33 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>A =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="A"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>B =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="B"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>W =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="W"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>Сгенерированный ключ =</Label>
-                    <Border BorderBrush="Black" BorderThickness="1">
+                    <ScrollViewer>
                         <UniformGrid Name="Key"/>
-                    </Border>
+                    </ScrollViewer>
                 </StackPanel>
             </StackPanel>
             <StackPanel Name="ErrorPanel" Visibility="Collapsed">
                 <Label>Сообщение об ошибке:</Label>
                 <TextBlock Name="ErrorTB"></TextBlock>
             </StackPanel>
-            
         </StackPanel>
     </Grid>
 </Window>

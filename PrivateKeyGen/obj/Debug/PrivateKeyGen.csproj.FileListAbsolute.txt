@@ -12,6 +12,3 @@ C:\Users\user\Desktop\proger777\c#\PrivateKeyGen\obj\Debug\PrivateKeyGen.Propert
 C:\Users\user\Desktop\proger777\c#\PrivateKeyGen\obj\Debug\PrivateKeyGen.csproj.GenerateResource.Cache
 C:\Users\user\Desktop\proger777\c#\PrivateKeyGen\obj\Debug\PrivateKeyGen.exe
 C:\Users\user\Desktop\proger777\c#\PrivateKeyGen\obj\Debug\PrivateKeyGen.pdb
-C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\bin\Debug\PrivateKeyGen.exe.config
-C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.exe
-C:\Users\Дедов\Documents\GitHub\NSUCryptoSummerSchool\PrivateKeyGen\obj\Debug\PrivateKeyGen.pdb
