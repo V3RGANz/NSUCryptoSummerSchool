@@ -36,7 +36,7 @@
                 <Button Name="LaunchButton" Grid.Column="1" Padding="5" Margin="10 0 0 10" Click="Button_Click" IsEnabled="False">Запуск</Button>
             </Grid>
             <StackPanel Name="KGPanel" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Visibility="Hidden">
                     <Label>Установлено подключение к</Label>
                     <Label Foreground="Red">127.0.0.1</Label>
                 </StackPanel>
