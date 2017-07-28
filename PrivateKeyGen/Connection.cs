@@ -11,7 +11,7 @@ namespace PrivateKeyGen
         internal int Mod { get; private set; }
         internal int K { get; private set; }
         bool samePublicData = false, sameYourPiece = false, sameHisPiece = false;
-        const int packageSize = 1024;//implying it will always be enough
+        const int packageSize = 20480;//implying it will always be enough
         public NetworkStream stream;
         internal Connection(NetworkStream stream)
         {

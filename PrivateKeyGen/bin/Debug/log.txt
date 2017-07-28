@@ -1,1 +1,5 @@
-Second file added
+Matrices read: W size == 26 
+Poly calc
+Extended calculated: size == 17
+poly2 made 
+poly2 computed 

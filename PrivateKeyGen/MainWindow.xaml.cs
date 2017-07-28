@@ -163,10 +163,15 @@ namespace PrivateKeyGen
                 ConnectedLabel.Content = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
                 if (MSlider.Value == 1)
                     k = 0;
-                m = server ? con.Protocol(n, k, mod) : con.Protocol();
+                m = server ? await Task.Run(() => con.Protocol(n, k, mod)) : await Task.Run(() => con.Protocol());
                 KGPanel.Visibility = Visibility.Visible;
-                foreach (var v in M.Zip(m, Tuple.Create))
-                    WriteMatrix(v.Item1, v.Item2);
+
+                WriteMatrix(A, m[0]);
+                WriteMatrix(B, m[1]);
+                WriteMatrix(W, m[2]);
+                WriteMatrix(Key, m[3]);
+                //foreach (var v in M.Zip(m, Tuple.Create))
+                //    WriteMatrix(v.Item1, v.Item2);
             }
             catch (Exception ex)
             {
@@ -187,7 +192,7 @@ namespace PrivateKeyGen
             M.Rows = data.GetLength(1);
             for (int i = 0; i < M.Rows; ++i)
                 for (int j = 0; j < M.Rows; ++j)
-                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString(), Margin = new Thickness(2) });
+                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString(), Margin = new Thickness(2), TextAlignment = TextAlignment.Center });
         }
     }
 }
