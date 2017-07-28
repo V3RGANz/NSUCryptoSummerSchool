@@ -42,6 +42,8 @@ namespace PrivateKeyGen
                     (buf[0] == (byte)PackageCode.CreatePublicData || buf[0] == (byte)PackageCode.PublicDataIsNotTheSame))
                 {
                     CreatePublicData(buf, 1);
+                    pd = Marshal.AllocHGlobal(buf.Length - 1);
+                    Marshal.Copy(buf, 1, pd, buf.Length - 1);
                     RequestComparePublicData(buf);
                 }
                 else if (buf[0] == (byte)PackageCode.RequestComparePublicData)
@@ -141,9 +143,9 @@ namespace PrivateKeyGen
         }
         void SendYourPiece()//both here and later
         {
-            int size = 1 + W.size * W.size * sizeof(int);
+            int size = 1 + W.data.Length * sizeof(int);
             byte[] _buf = new byte[size];
-            Matrix.MakePublic(pd, out lr, out yp);
+            Matrix.MakePublic( pd, out lr, out yp);
             Marshal.Copy(yp, _buf, 0, size);
             int offset = 0;
             yourP = ByteArrayToMatrix(_buf, ref offset);

@@ -1,5 +1,10 @@
-Matrices read: W size == 26 
-Poly calc
-Extended calculated: size == 17
-poly2 made 
-poly2 computed 
+matrices readleft size 10
+right size 10result size 10lr allocatedlr addedythp addedin funcmodulo read
+1st m read
+2nd m read
+ythp m read
+1st size = 10
+ 2nd size = 10
+ 3d size = 10got product
+space alloc
+key m written
