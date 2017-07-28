@@ -24,7 +24,6 @@ namespace PrivateKeyGen
     /// </summary>
     public partial class MainWindow : Window
     {
-        UniformGrid[] M;
         TcpClient client;
         bool server;
         bool running = false;
@@ -45,7 +44,6 @@ namespace PrivateKeyGen
         IPAddress ip;
         public MainWindow()
         {
-            M = new UniformGrid[]{ A, B, W, Key};
             InitializeComponent();
         }
 
@@ -74,7 +72,7 @@ namespace PrivateKeyGen
                 {
                     IsIntTBCorrect(ServerPortTB, ref port, port => (port >= 1024 && port <= 65535));
                     IsIntTBCorrect(ServerNTB, ref n, N => (N >= 3 && N <= 15));
-                    IsIntTBCorrect(ServerKTB, ref k, K => (K >= 1 && (result & 2) != 0 && K < n));
+                    IsIntTBCorrect(ServerKTB, ref k, K => (K >= 1 && (result & 2) != 0));
                     IsIntTBCorrect(ServerModTB, ref mod, IsPrime);
                     if (result == 15)
                         Launch(true);
@@ -165,13 +163,11 @@ namespace PrivateKeyGen
                     k = 0;
                 m = server ? await Task.Run(() => con.Protocol(n, k, mod)) : await Task.Run(() => con.Protocol());
                 KGPanel.Visibility = Visibility.Visible;
-
                 WriteMatrix(A, m[0]);
                 WriteMatrix(B, m[1]);
                 WriteMatrix(W, m[2]);
                 WriteMatrix(Key, m[3]);
-                //foreach (var v in M.Zip(m, Tuple.Create))
-                //    WriteMatrix(v.Item1, v.Item2);
+
             }
             catch (Exception ex)
             {
@@ -192,7 +188,7 @@ namespace PrivateKeyGen
             M.Rows = data.GetLength(1);
             for (int i = 0; i < M.Rows; ++i)
                 for (int j = 0; j < M.Rows; ++j)
-                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString(), Margin = new Thickness(2), TextAlignment = TextAlignment.Center });
+                    M.Children.Add(new TextBlock() { Text = data[i, j].ToString(), Margin = new Thickness(2), TextAlignment = TextAlignment.Center});
         }
     }
 }
