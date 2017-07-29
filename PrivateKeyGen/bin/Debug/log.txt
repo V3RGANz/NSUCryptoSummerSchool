@@ -1,10 +1,16 @@
 matrices readleft size 10
-right size 10result size 10lr allocatedlr addedythp addedin funcmodulo read
+right size 10result size 10lr allocatedlr addedythp addedin funcin funcmodulo read
+modulo read
 1st m read
+1st m read
+2nd m read
 2nd m read
 ythp m read
 1st size = 10
  2nd size = 10
  3d size = 10got product
+got product
 space alloc
+space alloc
+key m written
 key m written

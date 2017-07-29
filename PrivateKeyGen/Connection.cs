@@ -13,7 +13,7 @@ namespace PrivateKeyGen
         internal int Mod { get; private set; }
         internal int K { get; private set; }
         bool samePublicData = false, sameYourPiece = false, sameHisPiece = false;
-        const int packageSize = 4096;//implying it will always be enough
+        const int packageSize = 10240;//implying it will always be enough
         public NetworkStream stream;
         internal Connection(NetworkStream stream)
         {
@@ -205,6 +205,11 @@ namespace PrivateKeyGen
             Marshal.Copy(buf, 0, hp, size);
             Matrix.MakePrivate(lr, hp, out key);
             Marshal.Copy(key, buf, 0, size);
+            //Marshal.FreeHGlobal(pd);
+            //Marshal.FreeHGlobal(lr);
+            //Marshal.FreeHGlobal(yp);
+            //Marshal.FreeHGlobal(hp);
+            //Marshal.FreeHGlobal(key);
             int[][,] ret = new int[4][,];
             ret[0] = A.data;
             ret[1] = B.data;

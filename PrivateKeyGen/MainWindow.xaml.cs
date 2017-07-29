@@ -25,8 +25,8 @@ namespace PrivateKeyGen
     public partial class MainWindow : Window
     {
         TcpClient client;
-        bool server;
-        bool running = false;
+        TcpListener server;
+        bool isServer, running = false;
         string _k;
         //CancellationTokenSource cts = new CancellationTokenSource();
         bool Running
@@ -36,11 +36,14 @@ namespace PrivateKeyGen
             {
                 running = value;
                 LaunchButton.Content = running ? "Стоп" : "Запуск";
-                //cts.Cancel();
+                LaunchMenu.IsEnabled = !running;
+                if (isServer)
+                    server?.Stop();
+                else
+                    client?.Close();
             }
         }
-        int result;
-        int port, n, k, mod;
+        int result, port, n, k, mod;
         IPAddress ip;
         public MainWindow()
         {
@@ -49,7 +52,7 @@ namespace PrivateKeyGen
 
         private void ServerRB_Checked(object sender, RoutedEventArgs e)
         {
-            server = true;
+            isServer = true;
             ServerPanel.Visibility = Visibility.Visible;
             ClientPanel.Visibility = Visibility.Collapsed;
             LaunchButton.IsEnabled = true;
@@ -57,7 +60,7 @@ namespace PrivateKeyGen
 
         private void ClientRB_Checked(object sender, RoutedEventArgs e)
         {
-            server = false;
+            isServer = false;
             ServerPanel.Visibility = Visibility.Collapsed;
             ClientPanel.Visibility = Visibility.Visible;
             LaunchButton.IsEnabled = true;
@@ -68,14 +71,14 @@ namespace PrivateKeyGen
             if (!Running)
             {
                 result = 0;
-                if (server)
+                if (isServer)
                 {
                     IsIntTBCorrect(ServerPortTB, ref port, port => (port >= 1024 && port <= 65535));
                     IsIntTBCorrect(ServerNTB, ref n, N => (N >= 3 && N <= 15));
                     IsIntTBCorrect(ServerKTB, ref k, K => (K >= 1 && (result & 2) != 0));
                     IsIntTBCorrect(ServerModTB, ref mod, IsPrime);
                     if (result == 15)
-                        Launch(true);
+                        Launch();
                 }
                 else
                 {
@@ -85,7 +88,7 @@ namespace PrivateKeyGen
                     else
                         ClientIPTB.Foreground = Brushes.Red;
                     if (result == 2)
-                        Launch(false);
+                        Launch();
                 }
             }
             else
@@ -146,32 +149,43 @@ namespace PrivateKeyGen
             (sender as TextBox).Foreground = Brushes.Black;
         }
 
-        async void Launch(bool server)
+        async void Launch()
         {
             Running = true;
             ErrorPanel.Visibility = Visibility.Collapsed;
             try
             {
                 int[][,] m;
-                client = server ? await Task.Run(() => TCPModule.Accept(port))
-                    : await Task.Run(() => TCPModule.Connect(ip, port));
+                //client = isServer ? await Task.Run(() => TCPModule.Accept(port))
+                    //: await Task.Run(() => TCPModule.Connect(ip, port));
+                if (isServer)
+                {
+                    server = new TcpListener(IPAddress.Any, 8888);
+                    server.Start();
+                    client = await server.AcceptTcpClientAsync();
+                    server.Stop();
+                }
+                else
+                {
+                    client = new TcpClient();
+                    await client.ConnectAsync(ip, port);
+                }
                 NetworkStream stream = client.GetStream();
                 Connection con = new Connection(stream);
                 ConnectedPanel.Visibility = Visibility.Visible;
                 ConnectedLabel.Content = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
                 if (MSlider.Value == 1)
                     k = 0;
-                m = server ? await Task.Run(() => con.Protocol(n, k, mod)) : await Task.Run(() => con.Protocol());
+                m = isServer ? await Task.Run(() => con.Protocol(n, k, mod)) : await Task.Run(() => con.Protocol());
                 KGPanel.Visibility = Visibility.Visible;
                 WriteMatrix(A, m[0]);
                 WriteMatrix(B, m[1]);
                 WriteMatrix(W, m[2]);
                 WriteMatrix(Key, m[3]);
-
             }
             catch (Exception ex)
             {
-                ErrorTB.Text = ex.Message;
+                ErrorTB.Text = ex.GetType() + ": " + ex.Message;
                 ErrorPanel.Visibility = Visibility.Visible;
             }
             finally
