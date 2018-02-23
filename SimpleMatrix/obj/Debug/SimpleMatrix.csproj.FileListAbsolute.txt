@@ -1,0 +1,5 @@
+C:\Users\user\Desktop\proger777\c#\SimpleMatrix\bin\Debug\SimpleMatrix.exe.config
+C:\Users\user\Desktop\proger777\c#\SimpleMatrix\bin\Debug\SimpleMatrix.exe
+C:\Users\user\Desktop\proger777\c#\SimpleMatrix\bin\Debug\SimpleMatrix.pdb
+C:\Users\user\Desktop\proger777\c#\SimpleMatrix\obj\Debug\SimpleMatrix.exe
+C:\Users\user\Desktop\proger777\c#\SimpleMatrix\obj\Debug\SimpleMatrix.pdb

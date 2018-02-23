@@ -27,7 +27,7 @@ namespace SimpleMatrix
     {
         static Random r = new Random();
         static int size;
-        static Polynomial[,] M;//square only
+        static Polynomial[,] M;
         static Permutation perm;
         static Stack<int> stack = new Stack<int>();
         static void GenerateCharacteristicMatrix(int size)
@@ -35,7 +35,7 @@ namespace SimpleMatrix
             Program.size = size;
             M = new Polynomial[size, size];
             for (int i = 0; i < size; ++i)
-                for (int j = 0; i < size; ++j)
+                for (int j = 0; j < size; ++j)
                 {
                     double t = r.NextDouble();
                     M[i, j] = i == j ? new Polynomial(t, -1) : new Polynomial(t);
@@ -49,20 +49,26 @@ namespace SimpleMatrix
                 for (int i = depth + 1; i < perm.size; ++i)
                 {
                     foreach (Permutation x in Permutations(depth + 1))
+                    {
                         yield return x;
-                    perm.Swap(depth, i);
+                        perm.Swap(depth, i);
+                    }
                 }
         }
         static Polynomial Minor(int i, int j)
         {
-            int[] li = (int[])Enumerable.Range(0, i).Concat(Enumerable.Range(i + 1, size - i - 1));
+            int[] li = Enumerable.Range(0, i).Concat(Enumerable.Range(i + 1, size - i - 1)).ToArray();
             perm = new Permutation(Enumerable.Range(0, j).Concat(Enumerable.Range(j + 1, size - j - 1)));
-            Polynomial ret = new Polynomial(0);
+            Polynomial ret = new Polynomial();
             foreach (Permutation p in Permutations())
             {
                 Polynomial mul = new Polynomial(p.sign);
-                for (int k = 0; k < size; ++k)
-                    mul *= M[li[k], p.seq[k]];
+                for (int k = 0; k < size - 1; ++k)
+                {
+                    Polynomial pol = M[li[k], p.seq[k]];
+                    mul *= pol;
+                }
+                    //mul *= M[li[k], p.seq[k]];
                 ret += mul;
             }
             return ret;
