@@ -1,3 +1,3 @@
 # NSUCryptoSummerSchool
 
-There will be DF-based protocol implementation
+Old, forgotten and useless
